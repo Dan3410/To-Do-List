@@ -4,19 +4,19 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const ToDo_Model = require("./models/To-Do_Model");
 
 var indexRouter = require("./routes/index");
-const { connectToDatabase } = require("./bin/sequelize");
-const { generateToDoModel } = require("./models/To-Do_Model");
+const sequelize = require("./bin/sequelize");
 
 var app = express();
 app.use(cors());
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
-// database connection
-const sequelize = connectToDatabase();
-generateToDoModel(sequelize);
+// Synchronize sequelize
+
+sequelize.sync();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
