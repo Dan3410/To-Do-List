@@ -12,6 +12,10 @@ const ToDo_Model = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    marked: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
   },
   {}
 );

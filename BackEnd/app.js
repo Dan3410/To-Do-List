@@ -16,7 +16,7 @@ app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
 // Synchronize sequelize
 
-sequelize.sync();
+sequelize.sync({force:true});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
