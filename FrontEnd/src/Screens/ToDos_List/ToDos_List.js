@@ -1,72 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getAllToDos, addToDo} from "../../Api/ToDoApi";
 import ToDoItem from "../../Components/ToDoItem/ToDoItem";
 import "./ToDos_List.scss";
 
-export let toDos_List = [
-  {
-    id: 1,
-    label: "Buy groceries",
-    description: "There are lots of things to buy",
-    marked: false,
-  },
-  {
-    id: 2,
-    label: "Start a new project",
-    description: "Something simple",
-    marked: false,
-  },
-];
-
 function ToDos_List() {
   const [errorMessage, setErrorMessage] = useState("");
+  const [toDoList, setToDoList] = useState([]);
   const [newToDo, setNewToDo] = useState({
-    id: toDos_List.length + 1,
-    label: "",
+    title: "",
     description: "",
     marked: false,
   });
 
-  const addNewTodo = (e) => {
-    e.preventDefault();
+  const getToDos = async () => {
     try {
-      if (newToDo.label === "")
-        throw new Error("The title field cannot be empty");
-      if (newToDo.description === "")
-        throw new Error("The description field cannot be empty");
-      const indexWithSameTitle = toDos_List
-        .map((toDo) => toDo.label)
-        .indexOf(newToDo.label);
-      console.log(indexWithSameTitle);
-      if (indexWithSameTitle !== -1)
-        throw new Error("The is already a ToDo with that title");
-      toDos_List = [...toDos_List, newToDo];
-      setNewToDo({
-        id: newToDo.id + 1,
-        label: "",
-        description: "",
-        marked: false,
+      getAllToDos().then((response) => {
+        setToDoList(response.data);
       });
-      setErrorMessage("");
-    } catch (error) {
-      setErrorMessage(error.message);
+    } catch (e) {
+      console.log("Error: ", e);
     }
   };
 
-  const deleteTodo = (id) => {
-    toDos_List = toDos_List.filter((ToDo) => ToDo.id !== id);
+  const addNewTodo = (e) => {
+    e.preventDefault();
+    try {
+      if (newToDo.title === "")
+        throw new Error("The title field cannot be empty");
+      if (newToDo.description === "")
+        throw new Error("The description field cannot be empty");
+      const indexWithSameTitle = toDoList
+        .map((toDo) => toDo.title)
+        .indexOf(newToDo.title);
+      if (indexWithSameTitle !== -1)
+        throw new Error("The is already a ToDo with that title");
+      setToDoList([...toDoList, newToDo]);
+      addToDo(newToDo);
+      setErrorMessage("");
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setNewToDo({
+        title: "",
+        description: "",
+        marked: false,
+      });
+    }
   };
 
-  const handleMarkChange = (e) => {
-    const target = e.target;
-    const value = target.value;
-    const id = Number(target.id);
-
-    const markChangeIndex = toDos_List.map((toDo) => toDo.id).indexOf(id);
-    const newPendingToDoList = toDos_List;
-    newPendingToDoList[markChangeIndex].marked = value;
-
-    toDos_List = newPendingToDoList;
-  };
 
   const handleChangeNewTodo = (e) => {
     const target = e.target;
@@ -79,16 +60,18 @@ function ToDos_List() {
     });
   };
 
+  useEffect(() => {
+    getToDos();
+  }, []);
+
   return (
     <div className="list-format">
       <label className="title-format">To-Do List</label>
-      {toDos_List.map((ToDo) => {
+      {toDoList.map((toDo) => {
         return (
           <ToDoItem
-            ToDo={ToDo}
-            key={ToDo.id}
-            deleteToDo={deleteTodo}
-            markChange={handleMarkChange}
+            toDo={toDo}
+            key={toDo.id}
           ></ToDoItem>
         );
       })}
@@ -98,8 +81,8 @@ function ToDos_List() {
             <input
               type="text"
               className="input-format"
-              name="label"
-              value={newToDo.label}
+              name="title"
+              value={newToDo.title}
               onChange={handleChangeNewTodo}
               placeholder="Insert new ToDo's Title"
             />

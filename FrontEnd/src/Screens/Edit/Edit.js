@@ -1,20 +1,15 @@
 import { NavLink } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Edit.scss";
-import { toDos_List } from "../ToDos_List/ToDos_List";
 import { useState } from "react";
+import { updateToDoInfo } from "../../Api/ToDoApi";
 
 function Edit(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
-  const toDoIndex = toDos_List
-    .map((toDo) => toDo.id)
-    .indexOf(location.state.ToDo.id);
-  const [newToDoInfo, setNewToDoInfo] = useState({
-    label: toDos_List[toDoIndex].label,
-    description: toDos_List[toDoIndex].description,
-  });
+  const [newToDoInfo, setNewToDoInfo] = useState(location.state.toDo);
+
   const handleChange = (e) => {
     const target = e.target;
     const value = target.value;
@@ -26,17 +21,24 @@ function Edit(props) {
     });
   };
 
+  const updateToDo = async () => {
+    await updateToDoInfo(
+      newToDoInfo.id,
+      newToDoInfo.title,
+      newToDoInfo.description,
+      newToDoInfo.marked
+    );
+    navigate("/", { replace: true });
+  };
+
   const handleToDoChange = (e) => {
     e.preventDefault();
     try {
-      if (newToDoInfo.label === "")
+      if (newToDoInfo.title === "")
         throw new Error("The title field cannot be empty");
       if (newToDoInfo.description === "")
         throw new Error("The description field cannot be empty");
-      toDos_List[toDoIndex].label = newToDoInfo.label;
-      toDos_List[toDoIndex].description = newToDoInfo.description;
-      console.log(toDos_List);
-      navigate("/", { replace: true });
+      updateToDo();
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -46,13 +48,13 @@ function Edit(props) {
     <div className="edit-format">
       <label className="title-format"> Edit To-Do</label> <br />
       <div className="edit-container">
-        <label>Editing Task "{location.state.ToDo.label}"</label>
+        <label>Editing Task "{location.state.toDo.title}"</label>
         <form className="edit-container__form" onSubmit={handleToDoChange}>
           <input
             className="input-format"
             onChange={handleChange}
-            name="label"
-            value={newToDoInfo.label}
+            name="title"
+            value={newToDoInfo.title}
             placeholder="Insert the To-Do's new title"
           />
           <input

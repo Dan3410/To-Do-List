@@ -20,12 +20,12 @@ module.exports = {
   },
   addToDo: async function (req, res, next) {
     try {
-      await ToDo_Model.create({
+      const toDo = await ToDo_Model.create({
         title: req.body.title,
         description: req.body.description,
         marked: false
       });
-      modifyRes(res, "Success", "ToDo created!", null);
+      modifyRes(res, "Success", "ToDo created!", toDo);
     } catch (error) {
       console.log(error.message);
       modifyRes(res, "Error", error.message, null);
@@ -47,7 +47,7 @@ module.exports = {
   updateToDo: async function (req, res, next) {
     try {
       await ToDo_Model.update(
-        { title: req.body.title, description: req.body.description },
+        { title: req.body.title, description: req.body.description, marked: req.body.marked },
         { where: { id: req.params.id } }
       );
       modifyRes(res, "Success", "ToDo updated", null);

@@ -3,42 +3,51 @@ import { useState } from "react";
 import "./ToDoItem.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { updateToDoInfo, deleteToDo } from "../../Api/ToDoApi";
 
 function ToDoItem(props) {
   const [isDeleted, setDeleted] = useState(false);
+  const [toDo, setTodo] = useState(props.toDo);
 
-  function deleteToDo() {
-    props.deleteToDo(props.ToDo.id);
-    setDeleted(true);
-  }
-  if (props.ToDo !== undefined && !isDeleted)
+  const handleMarkChange = (e) => {
+    const target = e.target;
+    const checked = target.checked
+    updateToDoInfo(toDo.id, toDo.title, toDo.description, checked);
+    setTodo({ ...toDo, marked: checked });
+  };
+
+  const deleteItem = async () => {
+    await deleteToDo(toDo.id);
+    setDeleted(true)
+  };
+
+  if (toDo !== undefined && !isDeleted)
     return (
       <div className="todo-format todo-change-color">
         <div className="todo-format--center-vertically">
           <input
             type="checkbox"
-            id={props.ToDo.id}
-            value={props.ToDo.marked}
+            id={toDo.id}
+            checked={toDo.marked}
             className="todo-input-format"
-            onClick={props.markChange}
+            onChange={handleMarkChange}
           />
-          <label className="todo-label-format">{props.ToDo.label}</label>
+          <label className="todo-label-format">{toDo.title}</label>
           <FontAwesomeIcon
             icon={faTimesCircle}
             className="todo-erase-format"
-            onClick={deleteToDo}
+            onClick={deleteItem}
             title="Delete ToDo"
           />
-          <Link to={`/edit/${props.ToDo.id}`} state={{ ToDo: props.ToDo }}>
+          <Link to={`/edit/${toDo.id}`} state={{ toDo: toDo }}>
             <FontAwesomeIcon
               icon={faPen}
               className="todo-edit-format"
               title="Edit ToDo"
             />
           </Link>
-          <br/>
-          <label className="todo-description-format">{props.ToDo.description}</label>
-
+          <br />
+          <label className="todo-description-format">{toDo.description}</label>
         </div>
       </div>
     );
