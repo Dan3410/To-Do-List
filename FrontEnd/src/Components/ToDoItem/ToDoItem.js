@@ -17,6 +17,7 @@ function ToDoItem(props) {
   };
 
   const deleteItem = async () => {
+    console.log(toDo.id)
     await deleteToDo(toDo.id);
     setDeleted(true)
   };

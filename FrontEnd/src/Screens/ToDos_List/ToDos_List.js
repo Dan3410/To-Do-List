@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllToDos, addToDo} from "../../Api/ToDoApi";
+import { getAllToDos, addToDo } from "../../Api/ToDoApi";
 import ToDoItem from "../../Components/ToDoItem/ToDoItem";
 import "./ToDos_List.scss";
 
@@ -11,6 +11,12 @@ function ToDos_List() {
     description: "",
     marked: false,
   });
+
+  const addNewToDo = async () => {
+      addToDo(newToDo).then((response) => {
+        setToDoList([...toDoList, response.data]);
+      });
+  };
 
   const getToDos = async () => {
     try {
@@ -34,8 +40,7 @@ function ToDos_List() {
         .indexOf(newToDo.title);
       if (indexWithSameTitle !== -1)
         throw new Error("The is already a ToDo with that title");
-      setToDoList([...toDoList, newToDo]);
-      addToDo(newToDo);
+        addNewToDo();
       setErrorMessage("");
     } catch (error) {
       setErrorMessage(error.message);
@@ -47,7 +52,6 @@ function ToDos_List() {
       });
     }
   };
-
 
   const handleChangeNewTodo = (e) => {
     const target = e.target;
@@ -68,12 +72,7 @@ function ToDos_List() {
     <div className="list-format">
       <label className="title-format">To-Do List</label>
       {toDoList.map((toDo) => {
-        return (
-          <ToDoItem
-            toDo={toDo}
-            key={toDo.id}
-          ></ToDoItem>
-        );
+        return <ToDoItem toDo={toDo} key={toDo.id}></ToDoItem>;
       })}
       <div className="list__buttons">
         <form onSubmit={addNewTodo} className="list__add">
