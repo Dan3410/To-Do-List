@@ -1,0 +1,20 @@
+$fieldBorderBottomFormat: 3px solid;
+$fieldBorderBottomColorUnfocused: rgb(199, 199, 199);
+$fieldBorderBottomColorFocused: rgb(225, 109, 15);
+$inputTextColor: rgb(0, 0, 0);
+
+.input-format {
+    outline: none !important;
+    background: transparent;
+    margin: 6px;
+    padding-bottom: 2px;
+    border: none;
+    border-bottom: $fieldBorderBottomFormat $fieldBorderBottomColorUnfocused;
+    transition: border-bottom 0.5s ease-out;
+    color: $inputTextColor;
+  }
+  
+  .input-format:focus {
+    border-bottom: $fieldBorderBottomFormat $fieldBorderBottomColorFocused;
+  }
+  

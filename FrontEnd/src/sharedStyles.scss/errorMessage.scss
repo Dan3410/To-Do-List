@@ -1,0 +1,9 @@
+$errorMessageColor: rgb(255,0,0);
+
+.error-message-container {
+    text-align: center;
+    margin-top: 2%;
+}
+.error-message-label {
+    color: $errorMessageColor;
+}

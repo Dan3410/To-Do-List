@@ -1,0 +1,48 @@
+$headerButtonColorDefault: rgb(49, 44, 44);
+$headerButtonColorHover: rgb(240, 76, 0);
+$headerButtonTextColor: rgb(241, 241, 241);
+$headerColor: rgb(49, 44, 44);
+$headerTitleColor: rgb(255, 72, 0);
+
+.header-format {
+  width: 100%;
+  background-color: $headerColor;
+  height: 10%;
+  text-align: left;
+  position: relative;
+  margin: auto;
+}
+
+.header-button {
+  display: inline-block;
+  position: absolute;
+  width: 15%;
+  height: 100%;
+  background-image: linear-gradient(
+    $headerButtonColorHover,
+    $headerButtonColorHover
+  );
+  background-position: center;
+  background-size: 0%;
+  background-repeat: no-repeat;
+  background-color: $headerButtonColorDefault;
+  text-align: center;
+  position: relative;
+  transition: background-size 0.5s, background-position 0s 1s;
+}
+
+.header-button:hover, .active {
+  background-position:center;
+  background-size: 100%;
+}
+
+.header-button__label {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  cursor: pointer;
+  color: $headerButtonTextColor
+}

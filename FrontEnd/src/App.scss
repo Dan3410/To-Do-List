@@ -1,0 +1,23 @@
+$appBackgroundColor: rgb(255, 255, 255);
+
+.App {
+  text-align: center;
+  background: $appBackgroundColor;
+  height: 100%;
+  width: 100%;
+  position:absolute;
+}
+
+.content {
+  text-align: left;
+  position: absolute;
+  overflow: hidden;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: (-50%, -50%);
+  transform: translate(-50%, -50%);
+  height: 90%;
+  width: 90%;
+  margin: auto;
+  border-style: none;
+}

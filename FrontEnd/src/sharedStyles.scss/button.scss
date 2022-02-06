@@ -1,0 +1,18 @@
+$buttonColorDefault: rgb(214, 86, 0);
+$buttonColorHover: rgb(255, 115, 0);
+
+.button-format {
+  background-image: linear-gradient($buttonColorHover, $buttonColorHover);
+  background-color: $buttonColorDefault;
+  background-position: left;
+  background-size: 0%;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  transition: background-size 1s, background-position 0s 1s;
+}
+
+button:hover {
+  background-position: right;
+  background-size: 100%;
+}

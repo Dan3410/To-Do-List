@@ -1,0 +1,25 @@
+@use '../../sharedStyles.scss/button.scss';
+@use '../../sharedStyles.scss/input.scss';
+@use '../../sharedStyles.scss/title.scss';
+@use '../../sharedStyles.scss/errorMessage.scss';
+
+
+.list-format {
+  height: 90%;
+  width:100%;
+  position: absolute;
+  overflow: scroll;
+  text-align: center;
+}
+
+.list__buttons {
+  position: absolute;
+  bottom: 2%;
+  width: 100%;
+}
+
+.list__add__button {
+  margin-left: 2%;
+  width: 20%;
+  border-radius: 10px;
+}
