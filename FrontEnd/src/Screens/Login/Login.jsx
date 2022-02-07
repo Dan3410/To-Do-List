@@ -58,7 +58,7 @@ function Login(props) {
           <div className="login-form__container">
             <label>Username:</label> <br />
             <input
-              className="input-format login__input"
+              className="input-format login__input "
               type="text"
               name="username"
               value={form.username}
