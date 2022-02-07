@@ -14,7 +14,7 @@ function Header(props) {
         </NavLink>
     }
     {props.isLoggedIn && 
-            <NavLink to={'/'} onClick={props.logoutUser} className="header-button">
+            <NavLink to={'/logout'} onClick={props.logoutUser} className="header-button">
             <label className="header-button__label">Logout</label>
           </NavLink>}
     </div>

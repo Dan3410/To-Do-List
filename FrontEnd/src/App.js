@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import Folder_List from "./Screens/Folders_List/Folders_List";
 import ToDos_List from "./Screens/ToDos_List/ToDos_List";
 import Edit from "./Screens/Edit/Edit";
@@ -15,9 +15,10 @@ function App() {
           {/* eslint-disable-next-line react/jsx-pascal-case*/}
           <Route exact path="/" element={<Folder_List />} />
           {/* eslint-disable-next-line react/jsx-pascal-case*/}
-          <Route exact path="/:folderTitle" element={<ToDos_List />} />
+          <Route exact path="/folder/:folderTitle" element={<ToDos_List />} />
           <Route exact path="/edit/:id" element={<Edit />} />
           <Route exact path="/login" element={<LoginScreen />} />
+          <Route path="*" element={<Navigate to={"/"} replace />} />
         </Routes>
       </div>
     </div>

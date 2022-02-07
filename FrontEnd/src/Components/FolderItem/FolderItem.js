@@ -28,7 +28,7 @@ function FolderItem(props) {
             onClick={deleteFolderItem}
             title="Delete Folder (this operation will delete all items inside the folder)"
           />
-          <Link to={`/${folder.title}`} state={{ folder: folder }}>
+          <Link to={`/folder/${folder.title}`} state={{ folder: folder }}>
             <label className= "folder-view-items-label"> View Items </label>
           </Link>
         </div>
