@@ -15,8 +15,6 @@ echo Installing necessary packages for FrontEnd
 cd FrontEnd && npm install
 cd ..
 
-npm install -g concurrently
-
 cd BackEnd && npm start
 
 
