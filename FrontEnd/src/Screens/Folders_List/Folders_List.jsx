@@ -58,9 +58,8 @@ function Folder_List(props) {
   const handleChangeNewFolder = (e) => {
     const target = e.target;
     const value = target.value;
-    if (value <= 255) {
+    if (value.length <= 255) {
       const name = target.name;
-
       setNewFolder({
         ...newFolder,
         [name]: value,
