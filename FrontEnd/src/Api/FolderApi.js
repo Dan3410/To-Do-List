@@ -13,7 +13,7 @@ export async function deleteFolder(id){
 
 export async function addFolder(newFolder){
     const response = await axios.post(baseURL,{
-        title: newFolder.title,
+        title: newFolder.title.trim(),
    })
     return await response.data
 }

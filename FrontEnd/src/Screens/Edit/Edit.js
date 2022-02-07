@@ -14,7 +14,6 @@ function Edit() {
   const handleChange = (e) => {
     const target = e.target;
     const value = target.value;
-    console.log(value.length);
     if (value.length <= 255) {
       const name = target.name;
 

@@ -10,8 +10,8 @@ export async function updateToDoInfo(id, title, description,marked){
     const response = await axios.put(
         baseURL + id,
         {
-            title: title,
-            description: description,
+            title: title.trim(),
+            description: description.trim(),
             marked: marked
         }
     )
@@ -25,8 +25,8 @@ export async function deleteToDo(id){
 
 export async function addToDo(newToDo){
     const response = await axios.post(baseURL,{
-        title: newToDo.title,
-        description: newToDo.description,
+        title: newToDo.title.trim(),
+        description: newToDo.description.trim(),
         FolderId: newToDo.folderId
     })
     return await response.data
