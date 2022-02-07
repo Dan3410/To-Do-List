@@ -1,6 +1,7 @@
 # To-Do-List
 
 Requirements:
+	NPM 8.4.1  
 	ReactJS 17.0.2  
 	NodeJS 16.6.0  
 	MySQL 8.0.27  
