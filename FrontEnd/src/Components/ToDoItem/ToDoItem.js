@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./ToDoItem.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import { updateToDoInfo, deleteToDo } from "../../Api/ToDoApi";
+import { updateToDoInfo } from "../../Api/ToDoApi";
 
 function ToDoItem(props) {
   const [isDeleted, setDeleted] = useState(false);
@@ -11,15 +11,18 @@ function ToDoItem(props) {
 
   const handleMarkChange = (e) => {
     const target = e.target;
-    const checked = target.checked
+    const checked = target.checked;
     updateToDoInfo(toDo.id, toDo.title, toDo.description, checked);
     setTodo({ ...toDo, marked: checked });
   };
 
   const deleteItem = async () => {
-    console.log(toDo.id)
-    await deleteToDo(toDo.id);
-    setDeleted(true)
+    try {
+      await props.deleteToDo(toDo.id);
+      setDeleted(true);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   if (toDo !== undefined && !isDeleted)

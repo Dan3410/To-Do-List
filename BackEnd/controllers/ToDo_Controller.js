@@ -1,4 +1,9 @@
-const ToDo_Model = require("../models/To-Do_Model");
+const {
+  findAllToDosFromFolderService,
+  createToDoService,
+  deleteToDoService,
+  updateToDoService,
+} = require("../services/ToDo_Services");
 
 function modifyRes(res, status, message, data) {
   res.json({
@@ -9,9 +14,9 @@ function modifyRes(res, status, message, data) {
 }
 
 module.exports = {
-  getAllToDos: async function (req, res, next) {
+  getAllToDosFromFolder: async function (req, res, next) {
     try {
-      const ToDoList = await ToDo_Model.findAll();
+      const ToDoList = await findAllToDosFromFolderService(req.params.folderId);
       modifyRes(res, "Success", "ToDos retrieved", ToDoList);
     } catch (error) {
       console.log(error.message);
@@ -20,11 +25,11 @@ module.exports = {
   },
   addToDo: async function (req, res, next) {
     try {
-      const toDo = await ToDo_Model.create({
-        title: req.body.title,
-        description: req.body.description,
-        marked: false
-      });
+      const toDo = await createToDoService(
+        req.body.title,
+        req.body.description,
+        req.body.FolderId
+      );
       modifyRes(res, "Success", "ToDo created!", toDo);
     } catch (error) {
       console.log(error.message);
@@ -33,11 +38,7 @@ module.exports = {
   },
   deleteToDo: async function (req, res, next) {
     try {
-      await ToDo_Model.destroy({
-        where: {
-          id: req.params.id,
-        },
-      });
+      await deleteToDoService(req.params.id);
       modifyRes(res, "Success", "ToDo deleted", null);
     } catch (error) {
       console.log(error.message);
@@ -46,9 +47,11 @@ module.exports = {
   },
   updateToDo: async function (req, res, next) {
     try {
-      await ToDo_Model.update(
-        { title: req.body.title, description: req.body.description, marked: req.body.marked },
-        { where: { id: req.params.id } }
+      await updateToDoService(
+        req.params.id,
+        req.body.title,
+        req.body.description,
+        req.body.marked
       );
       modifyRes(res, "Success", "ToDo updated", null);
     } catch (error) {

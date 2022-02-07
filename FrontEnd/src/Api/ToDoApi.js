@@ -1,16 +1,12 @@
 import axios from 'axios'
-const baseURL = "http://localhost:8080/"
+const baseURL = "http://localhost:8080/toDo/"
 
-export async function getAllToDos(){
-    const response = await axios.get(baseURL )
+export async function getAllToDosFromFolder(folderId){
+    const response = await axios.get(baseURL + `${folderId}`)
     return response.data;
 }
 
 export async function updateToDoInfo(id, title, description,marked){
-    console.log(id)
-    console.log(title)
-    console.log(description)
-    console.log(marked)
     const response = await axios.put(
         baseURL + id,
         {
@@ -30,7 +26,8 @@ export async function deleteToDo(id){
 export async function addToDo(newToDo){
     const response = await axios.post(baseURL,{
         title: newToDo.title,
-        description: newToDo.description
+        description: newToDo.description,
+        FolderId: newToDo.folderId
     })
     return await response.data
 }

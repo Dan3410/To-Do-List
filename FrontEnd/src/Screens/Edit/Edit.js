@@ -4,7 +4,7 @@ import "./Edit.scss";
 import { useState } from "react";
 import { updateToDoInfo } from "../../Api/ToDoApi";
 
-function Edit(props) {
+function Edit() {
   const navigate = useNavigate();
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
@@ -28,7 +28,7 @@ function Edit(props) {
       newToDoInfo.description,
       newToDoInfo.marked
     );
-    navigate("/", { replace: true });
+    navigate(-1);
   };
 
   const handleToDoChange = (e) => {
@@ -43,6 +43,7 @@ function Edit(props) {
       setErrorMessage(error.message);
     }
   };
+
 
   return (
     <div className="edit-format">

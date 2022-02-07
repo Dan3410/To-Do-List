@@ -1,34 +1,43 @@
-import { useState, useEffect } from "react";
-import { getAllToDos, addToDo } from "../../Api/ToDoApi";
+import { useState, useEffect, useCallback } from "react";
+import { useLocation } from "react-router";
+import { getAllToDosFromFolder, addToDo, deleteToDo } from "../../Api/ToDoApi";
 import ToDoItem from "../../Components/ToDoItem/ToDoItem";
 import "./ToDos_List.scss";
 
-function ToDos_List() {
+function ToDos_List(props) {
+  const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
   const [toDoList, setToDoList] = useState([]);
   const [newToDo, setNewToDo] = useState({
     title: "",
     description: "",
     marked: false,
+    folderId: location.state.folder.id,
   });
 
-  const addNewToDo = async () => {
-      addToDo(newToDo).then((response) => {
-        setToDoList([...toDoList, response.data]);
-      });
+  const deleteToDoFromDatabase = async (id) => {
+    deleteToDo(id).then((response) => {
+      setToDoList(toDoList.filter((toDo) => toDo.id !== id));
+    });
   };
 
-  const getToDos = async () => {
+  const addNewToDoToDatabase = async () => {
+    addToDo(newToDo).then((response) => {
+      setToDoList([...toDoList, response.data]);
+    });
+  };
+
+  const getToDosFromDatabase = useCallback(async () => {
     try {
-      getAllToDos().then((response) => {
+      await getAllToDosFromFolder(location.state.folder.id).then((response) => {
         setToDoList(response.data);
       });
     } catch (e) {
       console.log("Error: ", e);
     }
-  };
+  }, [location.state.folder.id]);
 
-  const addNewTodo = (e) => {
+  const addNewToDoItem = (e) => {
     e.preventDefault();
     try {
       if (newToDo.title === "")
@@ -40,12 +49,13 @@ function ToDos_List() {
         .indexOf(newToDo.title);
       if (indexWithSameTitle !== -1)
         throw new Error("The is already a ToDo with that title");
-        addNewToDo();
+      addNewToDoToDatabase();
       setErrorMessage("");
     } catch (error) {
       setErrorMessage(error.message);
     } finally {
       setNewToDo({
+        ...newToDo,
         title: "",
         description: "",
         marked: false,
@@ -65,17 +75,26 @@ function ToDos_List() {
   };
 
   useEffect(() => {
-    getToDos();
-  }, []);
+    getToDosFromDatabase();
+  }, [getToDosFromDatabase]);
 
   return (
-    <div className="list-format">
+    <div className="todo-list-format">
       <label className="title-format">To-Do List</label>
+      <div className="sub-title-container">
+        <label className="sub-title-format"> Folders -{'>'} {location.state.folder.title}</label>
+      </div>
       {toDoList.map((toDo) => {
-        return <ToDoItem toDo={toDo} key={toDo.id}></ToDoItem>;
+        return (
+          <ToDoItem
+            toDo={toDo}
+            key={toDo.id}
+            deleteToDo={deleteToDoFromDatabase}
+          ></ToDoItem>
+        );
       })}
-      <div className="list__buttons">
-        <form onSubmit={addNewTodo} className="list__add">
+      <div className="todo-list__buttons">
+        <form onSubmit={addNewToDoItem} className="list__add">
           <div>
             <input
               type="text"
@@ -94,7 +113,10 @@ function ToDos_List() {
               placeholder="Insert new ToDo's Description"
             />
           </div>
-          <button type="submit" className="button-format list__add__button">
+          <button
+            type="submit"
+            className="button-format todo-list__add__button"
+          >
             <label>Add</label>
           </button>
         </form>

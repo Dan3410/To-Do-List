@@ -4,7 +4,7 @@
 @use '../../sharedStyles.scss/errorMessage.scss';
 
 
-.todo-list-format {
+.folder-list-format {
   height: 90%;
   width:100%;
   position: absolute;
@@ -12,13 +12,18 @@
   text-align: center;
 }
 
-.todo-list__buttons {
+.sub-title-container{
+  width: 100%;
+  text-align: left;
+}
+
+.folder-list__buttons {
   position: absolute;
   bottom: 2%;
   width: 100%;
 }
 
-.todo-list__add__button {
+.folder-list__add__button {
   margin-left: 2%;
   width: 20%;
   border-radius: 10px;
