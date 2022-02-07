@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Edit.scss";
 import { useState } from "react";
@@ -44,7 +43,6 @@ function Edit() {
     }
   };
 
-
   return (
     <div className="edit-format">
       <label className="title-format"> Edit To-Do</label> <br />
@@ -69,13 +67,11 @@ function Edit() {
             <button type="submit" className="button-format edit__button">
               <label>Save</label>
             </button>
-            <NavLink to="/">
-              <button className="button-format edit__button">
-                <label>Cancel</label>
-              </button>
-            </NavLink>
           </div>
         </form>
+        <button onClick = {() => navigate (-1)}className="button-format edit__button">
+          <label>Cancel</label>
+        </button>
         <div className="error-message-container">
           <label className="error-message-label">{errorMessage}</label>
         </div>
