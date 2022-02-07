@@ -1,6 +1,8 @@
 import "./Login.scss";
 import { useState } from "react";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Navigate, useNavigate } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const user = { username: "user", password: "password" };
 
@@ -8,6 +10,18 @@ function Login(props) {
   const navigate = useNavigate();
   const [form, setForm] = useState({ username: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
+  const [typeInput, setType] = useState("password");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const showText = () => {
+    setType("text");
+    setShowPassword(true);
+  };
+
+  const hideText = () => {
+    setType("password");
+    setShowPassword(false);
+  };
 
   const login = (e) => {
     e.preventDefault();
@@ -53,10 +67,25 @@ function Login(props) {
             />
           </div>
           <div className="login-form__container">
-            <label>Password:</label> <br />
+            <label>Password:</label>
+            {!showPassword ? (
+              <FontAwesomeIcon
+                icon={faEye}
+                onClick={showText}
+                className="login__input--secret"
+              />
+            ) : null}
+            {showPassword ? (
+              <FontAwesomeIcon
+                icon={faEyeSlash}
+                onClick={hideText}
+                className="login__input--secret"
+              />
+            ) : null}
+            <br />
             <input
               className="input-format login__input"
-              type="text"
+              type={typeInput}
               name="password"
               value={form.password}
               placeholder={"Enter the password"}
@@ -72,7 +101,7 @@ function Login(props) {
         </div>
       </div>
     );
-  else return (<Navigate to={"/toDos"} replace />);
+  else return <Navigate to={"/toDos"} replace />;
 }
 
 export default Login;

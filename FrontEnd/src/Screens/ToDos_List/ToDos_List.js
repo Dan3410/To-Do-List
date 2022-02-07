@@ -109,7 +109,7 @@ function ToDos_List(props) {
           })}
         </div>
         <div className="todo-list__buttons">
-          <form onSubmit={addNewToDoItem} className="list__add">
+          <form onSubmit={addNewToDoItem} className="todo-list__add">
             <div>
               <input
                 type="text"

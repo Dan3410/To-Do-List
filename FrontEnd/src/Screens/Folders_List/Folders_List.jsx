@@ -94,7 +94,6 @@ function Folder_List(props) {
           </div>
           <div className="folder-list__buttons">
             <form onSubmit={addNewFolderItem} className="folder-list__add">
-              <div>
                 <input
                   type="text"
                   className="input-format"
@@ -102,8 +101,7 @@ function Folder_List(props) {
                   value={newFolder.title}
                   onChange={handleChangeNewFolder}
                   placeholder="Insert new Folder's Title"
-                />
-              </div>
+                /> 
               <button
                 type="submit"
                 className="button-format folder-list__add__button"

@@ -3,10 +3,13 @@
 @use '../../sharedStyles.scss/title.scss';
 @use '../../sharedStyles.scss/errorMessage.scss';
 
-
 .todo-list-format {
   height: 90%;
   width:100%;
+  text-align: center;
+}
+
+.todo-list-add{
   text-align: center;
 }
 
