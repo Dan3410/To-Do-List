@@ -1,19 +1,18 @@
-import { NavLink } from "react-router-dom";
-import "./Header.scss";
+import { connect } from "react-redux";
+import { logoutUser } from "../../Config/Redux/Actions/userActions";
+import Header from "./Header.jsx";
 
-function Header() {
-  return (
-    <>
-      <div className="header-format">
-        <NavLink to={``} className="header-button">
-          <label className="header-button__label">To-Do List</label>
-        </NavLink>
-        <NavLink to={`/login`} className="header-button">
-          <label className="header-button__label">Login</label>
-        </NavLink>
-      </div>
-    </>
-  );
+function mapStateToProps(state){
+  return {isLoggedIn: state.isLoggedIn,
+  username: state.username}
 }
 
-export default Header;
+function mapDispatchToProps(dispatch) {
+    return {
+      logoutUser: () => dispatch(logoutUser())
+    };
+  }
+  
+  const HeaderScreen = connect(mapStateToProps,mapDispatchToProps)(Header)
+  
+  export default HeaderScreen
