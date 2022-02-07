@@ -1,9 +1,9 @@
 # To-Do-List
 
 Requirements:
-	ReactJS 17.0  
-	NodeJS 16.6  
-	MySQL 8.0  
+	ReactJS 17.0.2  
+	NodeJS 16.6.0  
+	MySQL 8.0.27  
 	
 To execute the bash script, you will need to run the next command in a terminal:  
 	chmod +x ./script.sh  
