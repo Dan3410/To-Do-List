@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useLocation } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import { getAllToDosFromFolder, addToDo, deleteToDo } from "../../Api/ToDoApi";
 import ToDoItem from "../../Components/ToDoItem/ToDoItem";
 import "./ToDos_List.scss";
@@ -8,12 +8,16 @@ function ToDos_List(props) {
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
   const [toDoList, setToDoList] = useState([]);
-  const [newToDo, setNewToDo] = useState({
-    title: "",
-    description: "",
-    marked: false,
-    folderId: location.state.folder.id,
-  });
+  const [newToDo, setNewToDo] = useState(
+    location.state !== null
+      ? {
+          title: "",
+          description: "",
+          marked: false,
+          folderId: location.state.folder.id,
+        }
+      : {}
+  );
 
   const deleteToDoFromDatabase = async (id) => {
     deleteToDo(id).then((response) => {
@@ -29,13 +33,16 @@ function ToDos_List(props) {
 
   const getToDosFromDatabase = useCallback(async () => {
     try {
-      await getAllToDosFromFolder(location.state.folder.id).then((response) => {
-        setToDoList(response.data);
-      });
+      if (location.state !== null)
+        await getAllToDosFromFolder(location.state.folder.id).then(
+          (response) => {
+            setToDoList(response.data);
+          }
+        );
     } catch (e) {
       console.log("Error: ", e);
     }
-  }, [location.state.folder.id]);
+  }, [location.state]);
 
   const addNewToDoItem = (e) => {
     e.preventDefault();
@@ -78,56 +85,61 @@ function ToDos_List(props) {
     getToDosFromDatabase();
   }, [getToDosFromDatabase]);
 
-  return (
-    <div className="todo-list-format">
-      <label className="title-format">To-Do List</label>
-      <div className="sub-title-container">
-        <label className="sub-title-format"> Folders -{'>'} {location.state.folder.title}</label>
-      </div>
-      <div className="todo-list__items-container">
-      {toDoList.map((toDo) => {
-        return (
-          <ToDoItem
-            toDo={toDo}
-            key={toDo.id}
-            deleteToDo={deleteToDoFromDatabase}
-          ></ToDoItem>
-        );
-      })}
-      </div>
-      <div className="todo-list__buttons">
-        <form onSubmit={addNewToDoItem} className="list__add">
-          <div>
-            <input
-              type="text"
-              className="input-format"
-              name="title"
-              value={newToDo.title}
-              onChange={handleChangeNewTodo}
-              placeholder="Insert new ToDo's Title"
-            />
-            <input
-              type="text"
-              className="input-format"
-              name="description"
-              value={newToDo.description}
-              onChange={handleChangeNewTodo}
-              placeholder="Insert new ToDo's Description"
-            />
+  if (location.state !== null)
+    return (
+      <div className="todo-list-format">
+        <label className="title-format">To-Do List</label>
+        <div className="sub-title-container">
+          <label className="sub-title-format">
+            {" "}
+            Folders -{">"} {location.state.folder.title}
+          </label>
+        </div>
+        <div className="todo-list__items-container">
+          {toDoList.map((toDo) => {
+            return (
+              <ToDoItem
+                toDo={toDo}
+                key={toDo.id}
+                deleteToDo={deleteToDoFromDatabase}
+              ></ToDoItem>
+            );
+          })}
+        </div>
+        <div className="todo-list__buttons">
+          <form onSubmit={addNewToDoItem} className="list__add">
+            <div>
+              <input
+                type="text"
+                className="input-format"
+                name="title"
+                value={newToDo.title}
+                onChange={handleChangeNewTodo}
+                placeholder="Insert new ToDo's Title"
+              />
+              <input
+                type="text"
+                className="input-format"
+                name="description"
+                value={newToDo.description}
+                onChange={handleChangeNewTodo}
+                placeholder="Insert new ToDo's Description"
+              />
+            </div>
+            <button
+              type="submit"
+              className="button-format todo-list__add__button"
+            >
+              <label>Add</label>
+            </button>
+          </form>
+          <div className="error-message-container">
+            <label className="error-message-label">{errorMessage}</label>
           </div>
-          <button
-            type="submit"
-            className="button-format todo-list__add__button"
-          >
-            <label>Add</label>
-          </button>
-        </form>
-        <div className="error-message-container">
-          <label className="error-message-label">{errorMessage}</label>
         </div>
       </div>
-    </div>
-  );
+    );
+  else return <Navigate to={"/"} replace />;
 }
 
 export default ToDos_List;
