@@ -26,9 +26,9 @@ function Login(props) {
   const login = (e) => {
     e.preventDefault();
     try {
-      if (form.username === "") throw new Error("You must enter the username");
-      if (form.password === "") throw new Error("You must enter the password");
       const username = form.username.trim();
+      if (username === "") throw new Error("You must enter the username");
+      if (form.password === "") throw new Error("You must enter the password");
       if (username !== user.username) throw new Error("Invalid username");
       if (form.password !== user.password)
         throw new Error("Incorrect password");
