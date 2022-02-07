@@ -6,14 +6,16 @@ mysql --login-path=toDoList -e "create database toDoDB; CREATE USER 'toDoUser'@'
 
 
 echo Installing necessary packages for BackEnd
-cd BackEnd && npm install && npm start
+cd BackEnd && npm install
 cd ..
 
 echo
 
 echo Installing necessary packages for FrontEnd
-cd FrontEnd && npm install && npm start
+cd FrontEnd && npm install
 cd ..
+
+npm install -g concurrently
 
 cd BackEnd && npm start
 
