@@ -14,3 +14,5 @@ You will have to provide the password of the MySQL root user.
 The FrontEnd will run in localhost:3000  
 The BackEnd will run in localhost:8080  
 The SQLServer have to run in localhost:3306  
+
+For the login, the user is 'user' and password 'password'
