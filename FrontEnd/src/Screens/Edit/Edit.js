@@ -14,12 +14,15 @@ function Edit() {
   const handleChange = (e) => {
     const target = e.target;
     const value = target.value;
-    const name = target.name;
+    console.log(value.length);
+    if (value.length <= 255) {
+      const name = target.name;
 
-    setNewToDoInfo({
-      ...newToDoInfo,
-      [name]: value,
-    });
+      setNewToDoInfo({
+        ...newToDoInfo,
+        [name]: value,
+      });
+    }
   };
 
   const updateToDo = async () => {

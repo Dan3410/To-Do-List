@@ -15,7 +15,7 @@ function App() {
           {/* eslint-disable-next-line react/jsx-pascal-case*/}
           <Route exact path="/" element={<Folder_List />} />
           {/* eslint-disable-next-line react/jsx-pascal-case*/}
-          <Route exact path="/folder/:folderTitle" element={<ToDos_List />} />
+          <Route exact path="/folders/:folderTitle" element={<ToDos_List />} />
           <Route exact path="/edit/:id" element={<Edit />} />
           <Route exact path="/login" element={<LoginScreen />} />
           <Route path="*" element={<Navigate to={"/"} replace />} />

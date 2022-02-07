@@ -73,12 +73,14 @@ function ToDos_List(props) {
   const handleChangeNewTodo = (e) => {
     const target = e.target;
     const value = target.value;
-    const name = target.name;
+    if (value <= 255) {
+      const name = target.name;
 
-    setNewToDo({
-      ...newToDo,
-      [name]: value,
-    });
+      setNewToDo({
+        ...newToDo,
+        [name]: value,
+      });
+    }
   };
 
   useEffect(() => {

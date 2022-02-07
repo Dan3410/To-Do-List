@@ -58,12 +58,14 @@ function Folder_List() {
   const handleChangeNewFolder = (e) => {
     const target = e.target;
     const value = target.value;
-    const name = target.name;
+    if (value <= 255) {
+      const name = target.name;
 
-    setNewFolder({
-      ...newFolder,
-      [name]: value,
-    });
+      setNewFolder({
+        ...newFolder,
+        [name]: value,
+      });
+    }
   };
 
   useEffect(() => {
