@@ -18,7 +18,7 @@ function Login(props) {
       if (form.password !== user.password)
         throw new Error("Incorrect password");
       props.loginUser(form.username);
-      navigate("/", { replace: true });
+      navigate("/toDos", { replace: true });
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -48,6 +48,7 @@ function Login(props) {
               type="text"
               name="username"
               value={form.username}
+              placeholder={"Enter the username"}
               onChange={handleChange}
             />
           </div>
@@ -58,6 +59,7 @@ function Login(props) {
               type="text"
               name="password"
               value={form.password}
+              placeholder={"Enter the password"}
               onChange={handleChange}
             />
           </div>
@@ -70,7 +72,7 @@ function Login(props) {
         </div>
       </div>
     );
-  else return (<Navigate to={"/"} replace />);
+  else return (<Navigate to={"/toDos"} replace />);
 }
 
 export default Login;

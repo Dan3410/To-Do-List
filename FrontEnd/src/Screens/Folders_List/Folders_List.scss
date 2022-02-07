@@ -3,6 +3,7 @@
 @use '../../sharedStyles.scss/title.scss';
 @use '../../sharedStyles.scss/errorMessage.scss';
 
+$notLoggedColor: rgb(255, 102, 0);
 
 .folder-list-format {
   height: 90%;
@@ -30,4 +31,10 @@
   margin-left: 2%;
   width: 20%;
   border-radius: 10px;
+}
+
+.not-logged-label{
+  text-align: center;
+  font-size: xx-large;
+  color: $notLoggedColor;
 }

@@ -87,7 +87,7 @@ function Edit() {
         </div>
       </div>
     );
-  else return <Navigate to={"/"} replace />;
+  else return <Navigate to={"/toDos"} replace />;
 }
 
 export default Edit;

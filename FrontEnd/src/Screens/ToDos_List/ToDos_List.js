@@ -141,7 +141,7 @@ function ToDos_List(props) {
         </div>
       </div>
     );
-  else return <Navigate to={"/"} replace />;
+  else return <Navigate to={"/toDos"} replace />;
 }
 
 export default ToDos_List;
