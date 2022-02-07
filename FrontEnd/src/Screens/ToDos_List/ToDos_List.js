@@ -84,6 +84,7 @@ function ToDos_List(props) {
       <div className="sub-title-container">
         <label className="sub-title-format"> Folders -{'>'} {location.state.folder.title}</label>
       </div>
+      <div className="todo-list__items-container">
       {toDoList.map((toDo) => {
         return (
           <ToDoItem
@@ -93,6 +94,7 @@ function ToDos_List(props) {
           ></ToDoItem>
         );
       })}
+      </div>
       <div className="todo-list__buttons">
         <form onSubmit={addNewToDoItem} className="list__add">
           <div>

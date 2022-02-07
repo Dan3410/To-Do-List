@@ -7,13 +7,16 @@
 .todo-list-format {
   height: 90%;
   width:100%;
-  position: absolute;
-  overflow: scroll;
   text-align: center;
 }
 
+.todo-list__items-container{
+  overflow: scroll;
+  width:100%;
+  height: 70%;
+}
+
 .todo-list__buttons {
-  position: absolute;
   bottom: 2%;
   width: 100%;
 }

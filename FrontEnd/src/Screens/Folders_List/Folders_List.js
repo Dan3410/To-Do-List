@@ -72,21 +72,22 @@ function Folder_List() {
 
   return (
     <div className="folder-list-format">
-        <label className="title-format">To-Do List</label>
+      <label className="title-format">To-Do List</label>
       <br />
-      <div className= "sub-title-container">
-      <label className="sub-title-format"> Folders </label>
+      <div className="sub-title-container">
+        <label className="sub-title-format"> Folders </label>
       </div>{" "}
-
-      {folderList.map((folder) => {
-        return (
-          <FolderItem
-            folder={folder}
-            key={folder.id}
-            deleteFolder={deleteFolderFromDatabase}
-          ></FolderItem>
-        );
-      })}
+      <div className="folder-list__items-container">
+        {folderList.map((folder) => {
+          return (
+            <FolderItem
+              folder={folder}
+              key={folder.id}
+              deleteFolder={deleteFolderFromDatabase}
+            ></FolderItem>
+          );
+        })}
+      </div>
       <div className="folder-list__buttons">
         <form onSubmit={addNewFolderItem} className="folder-list__add">
           <div>
