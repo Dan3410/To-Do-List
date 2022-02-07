@@ -28,10 +28,11 @@ function Login(props) {
     try {
       if (form.username === "") throw new Error("You must enter the username");
       if (form.password === "") throw new Error("You must enter the password");
-      if (form.username !== user.username) throw new Error("Invalid username");
+      const username = form.username.trim();
+      if (username !== user.username) throw new Error("Invalid username");
       if (form.password !== user.password)
         throw new Error("Incorrect password");
-      props.loginUser(form.username);
+      props.loginUser(username);
       navigate("/toDos", { replace: true });
     } catch (error) {
       setErrorMessage(error.message);
