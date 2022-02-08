@@ -15,5 +15,8 @@ $titleColor: rgb(255, 115, 0);
     font-size: large;
     font-family: "Courier New", Courier, monospace;
     color: $titleColor;
+}
 
+.sub-title-format--pointer{
+    cursor: pointer;
 }

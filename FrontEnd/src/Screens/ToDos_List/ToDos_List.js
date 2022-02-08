@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Navigate, useLocation } from "react-router";
+import { Link } from "react-router-dom";
 import { getAllToDosFromFolder, addToDo, deleteToDo } from "../../Api/ToDoApi";
 import ToDoItem from "../../Components/ToDoItem/ToDoItem";
 import "./ToDos_List.scss";
@@ -92,9 +93,13 @@ function ToDos_List(props) {
       <div className="todo-list-format">
         <label className="title-format">To-Do List</label>
         <div className="sub-title-container">
+          <Link to={"/toDos"} style={{ textDecoration: "none" }}>
+            <label className="sub-title-format sub-title-format--pointer">
+              Folders
+            </label>
+          </Link>{" "}
           <label className="sub-title-format">
-            {" "}
-            Folders -{">"} {location.state.folder.title}
+            -{">"} {location.state.folder.title}
           </label>
         </div>
         <div className="todo-list__items-container">
