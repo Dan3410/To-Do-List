@@ -9,7 +9,6 @@ Requirements:
 To execute the bash script, you will need to run the next command in a terminal:  
 	chmod +x ./script.sh  
 	
-also, you need to run the script with privilege using sudo (Example: sudo ./script.sh)  
 You will have to provide the password of the MySQL root user.
 
 The FrontEnd will run in localhost:3000  
