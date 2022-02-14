@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { getAllToDosFromFolder, addToDo, deleteToDo } from "../../Api/ToDoApi";
 import ToDoItem from "../../Components/ToDoItem/ToDoItem";
-import "./ToDos_List.scss";
+import "./ToDosList.scss";
 
 function ToDos_List(props) {
   const location = useLocation();
@@ -109,6 +109,7 @@ function ToDos_List(props) {
                 toDo={toDo}
                 key={toDo.id}
                 deleteToDo={deleteToDoFromDatabase}
+                folderId= {location.state.folder.id}
               ></ToDoItem>
             );
           })}

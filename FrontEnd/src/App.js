@@ -1,10 +1,11 @@
 import "./App.scss";
 import { Navigate, Route, Routes } from "react-router";
-import ToDos_List from "./Screens/ToDos_List/ToDos_List";
-import Edit from "./Screens/Edit/Edit";
+import ToDosList from "./Screens/ToDos_List/ToDosList.jsx";
+import Edit from "./Screens/Edit/Edit.jsx";
 import LoginScreen from "./Screens/Login/Login.js";
 import HeaderScreen from "./Components/Header/Header.js";
 import FolderListScreen from "./Screens/Folders_List/Folders_List.js";
+import NotLoggedInWrapper from "./Components/NotLoggedInWrapper/NotLoggedIn.js";
 
 function App() {
   return (
@@ -15,9 +16,17 @@ function App() {
           {/* eslint-disable-next-line react/jsx-pascal-case*/}
           <Route exact path="/toDos/" element={<FolderListScreen />} />
           {/* eslint-disable-next-line react/jsx-pascal-case*/}
-          <Route exact path="/toDos/folders/:folderTitle" element={<ToDos_List />} />
+          <Route
+            exact
+            path="/toDos/folders/:folderTitle"
+            element={<ToDosList />}
+          />
           <Route exact path="/toDos/edit/:id" element={<Edit />} />
-          <Route exact path="/" element={<LoginScreen />} />
+          <Route
+            exact
+            path="/"
+            element={<NotLoggedInWrapper element={<LoginScreen />} />}
+          />
           <Route path="*" element={<Navigate to={"/"} replace />} />
         </Routes>
       </div>

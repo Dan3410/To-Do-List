@@ -43,7 +43,10 @@ function ToDoItem(props) {
             onClick={deleteItem}
             title="Delete ToDo"
           />
-          <Link to={`/toDos/edit/${toDo.id}`} state={{ toDo: toDo }}>
+          <Link
+            to={`/toDos/edit/${toDo.id}`}
+            state={{ toDo: toDo, folderId: props.folderId }}
+          >
             <FontAwesomeIcon
               icon={faPen}
               className="todo-edit-format"

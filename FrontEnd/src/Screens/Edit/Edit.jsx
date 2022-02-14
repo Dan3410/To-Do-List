@@ -2,8 +2,12 @@ import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import "./Edit.scss";
 import { useState } from "react";
 import { updateToDoInfo } from "../../Api/ToDoApi";
+import {
+  toDoDescriptionNotEmpty,
+  toDoTitleNotEmpty,
+} from "../../Utils/CheckToDos";
 
-function Edit() {
+function Edit(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
@@ -25,22 +29,26 @@ function Edit() {
   };
 
   const updateToDo = async () => {
-    await updateToDoInfo(
-      newToDoInfo.id,
-      newToDoInfo.title,
-      newToDoInfo.description,
-      newToDoInfo.marked
-    );
-    navigate(-1);
+    try {
+      const response = await updateToDoInfo(
+        newToDoInfo.id,
+        newToDoInfo.title,
+        newToDoInfo.description,
+        newToDoInfo.marked,
+        location.state.folderId
+      );
+      if (response.status === "Error") throw new Error(response.message);
+      navigate(-1);
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
 
   const handleToDoChange = (e) => {
     e.preventDefault();
     try {
-      if (newToDoInfo.title === "")
-        throw new Error("The title field cannot be empty");
-      if (newToDoInfo.description === "")
-        throw new Error("The description field cannot be empty");
+      toDoTitleNotEmpty(newToDoInfo.title);
+      toDoDescriptionNotEmpty(newToDoInfo.description);
       updateToDo();
     } catch (error) {
       setErrorMessage(error.message);

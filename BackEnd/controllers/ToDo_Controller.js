@@ -4,6 +4,7 @@ const {
   deleteToDoService,
   updateToDoService,
 } = require("../services/ToDo_Services");
+const { toDoAlreadyExists } = require("../utils/databases/CheckDatabase");
 
 function modifyRes(res, status, message, data) {
   res.json({
@@ -47,6 +48,8 @@ module.exports = {
   },
   updateToDo: async function (req, res, next) {
     try {
+      const toDoList = await findAllToDosFromFolderService(req.body.folderId);
+      toDoAlreadyExists(req.body.title,toDoList);
       await updateToDoService(
         req.params.id,
         req.body.title,

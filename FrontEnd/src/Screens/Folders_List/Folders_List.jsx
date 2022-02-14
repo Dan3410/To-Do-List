@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { getAllFolders, addFolder, deleteFolder } from "../../Api/FolderApi";
 import FolderItem from "../../Components/FolderItem/FolderItem";
+import {
+  folderAlreadyExists,
+  folderTitleNotEmpty,
+} from "../../Utils/CheckFolder";
 import "./Folders_List.scss";
 
 function Folder_List(props) {
@@ -35,13 +39,8 @@ function Folder_List(props) {
   const addNewFolderItem = (e) => {
     e.preventDefault();
     try {
-      if (newFolder.title === "")
-        throw new Error("The title field cannot be empty");
-      const indexWithSameTitle = folderList
-        .map((folder) => folder.title)
-        .indexOf(newFolder.title);
-      if (indexWithSameTitle !== -1)
-        throw new Error("The is already a Folder with that title");
+      folderTitleNotEmpty(newFolder.title);
+      folderAlreadyExists(newFolder.title, folderList);
       addNewFolderToDatabase();
       setErrorMessage("");
     } catch (error) {
@@ -93,14 +92,14 @@ function Folder_List(props) {
           </div>
           <div className="folder-list__buttons">
             <form onSubmit={addNewFolderItem} className="folder-list__add">
-                <input
-                  type="text"
-                  className="input-format"
-                  name="title"
-                  value={newFolder.title}
-                  onChange={handleChangeNewFolder}
-                  placeholder="Insert new Folder's Title"
-                /> 
+              <input
+                type="text"
+                className="input-format"
+                name="title"
+                value={newFolder.title}
+                onChange={handleChangeNewFolder}
+                placeholder="Insert new Folder's Title"
+              />
               <button
                 type="submit"
                 className="button-format folder-list__add__button"

@@ -6,13 +6,14 @@ export async function getAllToDosFromFolder(folderId){
     return response.data;
 }
 
-export async function updateToDoInfo(id, title, description,marked){
+export async function updateToDoInfo(id, title, description,marked,folderId){
     const response = await axios.put(
         baseURL + id,
         {
             title: title.trim(),
             description: description.trim(),
-            marked: marked
+            marked: marked,
+            folderId: folderId
         }
     )
     return await response.data;

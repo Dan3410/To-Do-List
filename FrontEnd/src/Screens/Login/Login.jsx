@@ -1,10 +1,10 @@
 import "./Login.scss";
 import { useState } from "react";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { correctPassword, passwordNotEmpty, usernameExists, userNotEmpty } from "../../Utils/CheckLoginForm";
 
-const user = { username: "user", password: "password" };
 
 function Login(props) {
   const navigate = useNavigate();
@@ -27,11 +27,10 @@ function Login(props) {
     e.preventDefault();
     try {
       const username = form.username.trim();
-      if (username === "") throw new Error("You must enter the username");
-      if (form.password === "") throw new Error("You must enter the password");
-      if (username !== user.username) throw new Error("Invalid username");
-      if (form.password !== user.password)
-        throw new Error("Incorrect password");
+      userNotEmpty(username);
+      passwordNotEmpty(form.password);
+      usernameExists(username);
+      correctPassword(form.password);
       props.loginUser(username);
       navigate("/toDos", { replace: true });
     } catch (error) {
@@ -49,7 +48,6 @@ function Login(props) {
     });
   };
 
-  if (!props.isLoggedIn)
     return (
       <div className="login-form">
         <div className="login__title-container">
@@ -102,7 +100,6 @@ function Login(props) {
         </div>
       </div>
     );
-  else return <Navigate to={"/toDos"} replace />;
 }
 
 export default Login;
