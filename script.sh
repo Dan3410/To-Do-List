@@ -11,8 +11,8 @@ cd ..
 
 echo
 
-echo Installing necessary packages for FrontEnd
-cd FrontEnd && npm install
+echo Installing necessary packages for FrontEnd 
+cd FrontEndReactJS && npm install
 cd ..
 
 cd BackEnd && npm start

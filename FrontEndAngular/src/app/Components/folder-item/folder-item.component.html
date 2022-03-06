@@ -1,0 +1,14 @@
+<div *ngIf="notDeleted" class="folder-format folder-change-color">
+  <div class="folder-format--center-vertically">
+    <label class="folder-label-format"> {{folder.title}} </label>
+    <fa-icon
+      [icon]="faTrash"
+      (click) = "deleteFolder()"
+      class="folder-erase-format"
+      title="Delete Folder (this operation will delete all items inside the folder)"
+    ></fa-icon>
+    <a (click) = "setFolderInService()"[routerLink]="['/toDos/folders',folder.id]">
+      <label class="folder-view-items-label"> View Items </label>
+    </a>
+  </div>
+</div>

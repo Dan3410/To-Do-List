@@ -1,0 +1,24 @@
+<div *ngIf="notDeleted" class="todo-format todo-change-color">
+  <div class="todo-format--center-vertically">
+    <input type="checkbox" class="todo-input-format" [(ngModel)]="toDo.marked"
+      (change)="updateToDo()"/>
+    <label class="todo-label-format"> {{ toDo.title }} </label>
+    <fa-icon
+      (click)="deleteToDo()"
+      [icon]="faTimesCircle"
+      class="todo-erase-format"
+      title="Delete ToDo"
+
+    >
+    </fa-icon>
+    <a (click) = "setToDoInService()" [routerLink]="['/toDos/edit',toDo.id]">
+      <fa-icon
+        [icon]="faPen"
+        class="todo-edit-format"
+        title="Edit ToDo"
+      ></fa-icon>
+    </a>
+    <br />
+    <label class="todo-description-format"> {{ toDo.description }}</label>
+  </div>
+</div>

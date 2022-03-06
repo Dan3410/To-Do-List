@@ -1,0 +1,27 @@
+@use '../../sharedStyles/button.scss';
+@use '../../sharedStyles/input.scss';
+@use '../../sharedStyles/title.scss';
+@use '../../sharedStyles/errorMessage.scss';
+
+
+.edit-format {
+  height: 90%;
+  padding-top: 2%;
+  text-align: center;
+}
+
+.edit__button {
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 2.5%;
+  border-radius: 10px;
+  width: 20%;
+}
+
+.edit-container{
+  margin-top: 2.5%;
+}
+
+.edit-container__form{
+  margin-top: 2.5%;
+}

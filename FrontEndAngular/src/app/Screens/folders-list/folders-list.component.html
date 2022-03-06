@@ -1,0 +1,38 @@
+<div *ngIf="loggedIn; else notLogged" class="folder-list-format">
+  <label class="title-format">To-Do List</label>
+  <br />
+  <div class="sub-title-container">
+    <label class="sub-title-format"> Folders </label>
+  </div>
+  <div class="folder-list__items-container">
+    <app-folder-item
+      *ngFor="let folder of folders"
+      [folder]="folder"
+    ></app-folder-item>
+  </div>
+  <div class="folder-list__buttons">
+    <form class="folder-list__add">
+      <input
+        type="text"
+        class="input-format"
+        [(ngModel)]="newFolder.title"
+        name="folderTitle"
+        placeholder="Insert new Folder's Title"
+      />
+      <button
+        (click)="createFolder()"
+        class="button-format folder-list__add__button"
+      >
+        <label>Create folder</label>
+      </button>
+    </form>
+    <div class="error-message-container">
+      <label class="error-message-label">{{ errorMessage }}</label>
+    </div>
+  </div>
+</div>
+<ng-template #notLogged>
+  <div class="folder-list-format">
+    <label class="not-logged-label"> You have to login first </label>
+  </div>
+</ng-template>

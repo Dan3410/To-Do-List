@@ -1,0 +1,40 @@
+@use '../../sharedStyles/button.scss';
+@use '../../sharedStyles/input.scss';
+@use '../../sharedStyles/title.scss';
+@use '../../sharedStyles/errorMessage.scss';
+
+$notLoggedColor: rgb(255, 102, 0);
+
+.folder-list-format {
+  height: 90%;
+  width:100%;
+  text-align: center;
+}
+
+.folder-list__items-container{
+  overflow: scroll;
+  width:100%;
+  height: 70%;
+}
+
+.sub-title-container{
+  width: 100%;
+  text-align: left;
+}
+
+.folder-list__buttons {
+  bottom: 2%;
+  width: 100%;
+}
+
+.folder-list__add__button {
+  margin-left: 2%;
+  width: 20%;
+  border-radius: 10px;
+}
+
+.not-logged-label{
+  text-align: center;
+  font-size: xx-large;
+  color: $notLoggedColor;
+}

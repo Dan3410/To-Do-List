@@ -1,0 +1,34 @@
+<div class="edit-format">
+    <label class="title-format"> Edit To-Do</label> <br />
+    <div class="edit-container">
+      <label>Editing Task "{{toDo.title}}"</label>
+      <form class="edit-container__form" >
+        <input
+          class="input-format"
+          name="title"
+          [(ngModel)]="toDo.title"
+          placeholder="Insert the To-Do's new title"
+        />
+        <input
+          class="input-format"
+          name="description"
+          [(ngModel)]="toDo.description"
+          placeholder="Insert the To-Do's new description"
+        />
+        <div>
+          <button type="submit" class="button-format edit__button"
+            (click)="updateToDo()">
+            <label>Save</label>
+          </button>
+        </div>
+      </form>
+      <button (click)="returnPreviousPage()"
+        class="button-format edit__button"
+      >
+        <label>Cancel</label>
+      </button>
+      <div class="error-message-container">
+        <label class="error-message-label"><!--{errorMessage}--></label>
+      </div>
+    </div>
+  </div>

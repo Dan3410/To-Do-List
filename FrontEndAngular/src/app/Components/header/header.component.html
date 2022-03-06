@@ -1,0 +1,21 @@
+<div class="header-format">
+  <a
+    routerLink="/toDos"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="header-button--active"
+    class="header-button"
+  >
+    <label class="header-button__label">To-Do List</label>
+  </a>
+  <a
+    routerLink="/"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="header-button--active"
+    class="header-button header-button--right"
+  >
+    <label class="header-button__label">Login</label>
+  </a>
+  <a routerLink="/logout" classList="header-button header-button--right">
+    <label class="header-button__label">Logout</label>
+  </a>
+</div>

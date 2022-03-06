@@ -1,0 +1,36 @@
+<div class="login-form">
+    <div class="login__title-container">
+      <label class="title-format">Login</label>
+    </div>
+    <form onSubmit={login}>
+      <div class="login-form__container">
+        <label>Username:</label> <br />
+        <input
+          class="input-format login__input "
+          type="text"
+          onChange={handleChange}
+        />
+      </div>
+      <div class="login-form__container">
+        <label>Password:</label>
+          <fa-icon
+            [icon]='faEye'
+            class="login__input--secret"
+          ></fa-icon>
+          <fa-icon
+            [icon]='faEyeSlash'
+            class="login__input--secret"
+          ></fa-icon>
+        <br />
+        <input
+          class="input-format login__input"
+        />
+      </div>
+      <button type="submit" class="button-format login__button">
+        <label>Login</label>
+      </button>
+    </form>
+    <div class="error-message-container">
+      <label class="error-message-label"></label>
+    </div>
+  </div>

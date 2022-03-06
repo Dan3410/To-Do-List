@@ -1,8 +1,10 @@
 # To-Do-List
 
+There is two versions of the proyect. One uses ReactJS and the other one uses Angular.  
+
 Requirements:
 	NPM 8.4.1  
-	ReactJS 17.0.2  
+	ReactJS 17.0.2/Angular 12.1.5  
 	NodeJS 16.6.0  
 	MySQL 8.0.27  
 	

@@ -49,7 +49,7 @@ module.exports = {
   updateToDo: async function (req, res, next) {
     try {
       const toDoList = await findAllToDosFromFolderService(req.body.folderId);
-      toDoAlreadyExists(req.body.title,toDoList);
+      toDoAlreadyExists(req.body.title, req.params.id,toDoList);
       await updateToDoService(
         req.params.id,
         req.body.title,

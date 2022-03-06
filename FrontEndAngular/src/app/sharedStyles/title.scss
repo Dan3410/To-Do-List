@@ -1,0 +1,22 @@
+$titleColor: rgb(255, 115, 0);
+
+.title-format {
+    font-size:xx-large;
+    font-family: "Courier New", Courier, monospace;
+    color: $titleColor;
+}
+
+.sub-title-container{
+    width: 100%;
+    text-align: left;
+  }
+  
+.sub-title-format{
+    font-size: large;
+    font-family: "Courier New", Courier, monospace;
+    color: $titleColor;
+}
+
+.sub-title-format--pointer{
+    cursor: pointer;
+}
