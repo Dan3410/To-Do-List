@@ -9,10 +9,12 @@ export class LoginService {
 
   isLoggedIn: EventEmitter<boolean> = new EventEmitter()
   constructor() {
-    console.log(localStorage.getItem("isLoggedIn") ? true : false)
+    /* Its looks like the services are constructed before the components,
+    so this code will actually do nothing in terms of what the component should show
     localStorage.getItem("isLoggedIn") ?
       this.isLoggedIn.emit(Boolean(localStorage.getItem("isLoggedIn"))) :
       this.isLoggedIn.emit(false);
+    */
   }
 
   getIsLoggedIn() {
