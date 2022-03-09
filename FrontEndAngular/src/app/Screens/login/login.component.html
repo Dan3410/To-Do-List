@@ -10,6 +10,7 @@
         type="text"
         [(ngModel)]="username"
         name="username"
+        placeholder="Enter the username"
       />
     </div>
     <div class="login-form__container">
@@ -24,6 +25,7 @@
         [(ngModel)]="password"
         name="password"
         type="{{passwordType}}"
+        placeholder="Enter the password"
       />
     </div>
     <button class="button-format login__button" (click)="login()">

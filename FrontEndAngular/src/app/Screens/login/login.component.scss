@@ -3,6 +3,7 @@
 @use '../../sharedStyles/title.scss';
 @use '../../sharedStyles/errorMessage.scss';
 
+$borderColor: rgb(255, 0, 0);
 
 .login-form {
   margin: 0;
@@ -13,7 +14,7 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   padding: 2.5%;
-  border: 3px solid rgb(255, 123, 0);
+  border: 3px solid $borderColor;
   border-radius: 20px;
 }
 
