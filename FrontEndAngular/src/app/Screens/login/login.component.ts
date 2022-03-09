@@ -17,14 +17,17 @@ export class LoginComponent implements OnInit {
   username: string = "";
   password: string = "";
   passwordHidden: boolean = true;
+  passwordType: string = 'password'
   errorMessage: string = ""
 
   showPassword(){
     this.passwordHidden = false;
+    this.passwordType = "text"
   }
 
   hidePassword(){
     this.passwordHidden = true;
+    this.passwordType = "password"
   }
 
   login() {
