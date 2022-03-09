@@ -5,27 +5,27 @@ export interface Response {
   }
 
 export interface Folder{
-  id: Number,
-  title: String,
+  id: number,
+  title: string,
   createdAt: any;
   updatedAt: any;
 }
 
 export interface ToDos{
   id: Number;
-  title: String;
-  description: String;
+  title: string;
+  description: string;
   createdAt: any;
   updatedAt: any;
   marked: Boolean;
 }
 
 export interface FolderToAdd{
-  title: String
+  title: string
 }
 
 export interface ToDoToAdd{
-  title: String,
-  description: String,
-  folderId: Number
+  title: string,
+  description: string,
+  folderId: number
 }

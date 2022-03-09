@@ -18,22 +18,23 @@ export class EditComponent implements OnInit {
   }
   folderId: Number = NaN;
   constructor(private toDoService: ToDosService,
-      private folderService: FolderService,
-      private toDoApiService: ToDoApiService,
-      private location: Location) { }
+    private folderService: FolderService,
+    private toDoApiService: ToDoApiService,
+    private location: Location) { }
 
-  returnPreviousPage(){
+  returnPreviousPage() {
     this.location.back()
   }
   updateToDo() {
     console.log(this.toDo);
     //It has to update the ToDo in the Service
-    this.toDoApiService.updateToDo(this.toDo.id, 
-    this.toDo.title,
-    this.toDo.description,
-    this.toDo.marked,
-    this.folderId)
-    this.returnPreviousPage();
+    this.toDoApiService.updateToDo(this.toDo.id,
+      this.toDo.title,
+      this.toDo.description,
+      this.toDo.marked,
+      this.folderId).then(() =>
+      this.returnPreviousPage()
+      )
   }
 
   ngOnInit(): void {

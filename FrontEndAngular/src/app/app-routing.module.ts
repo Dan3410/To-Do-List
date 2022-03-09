@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: 'toDos/folders/:folderTitle', component: ToDosListComponent},
   {path: 'toDos/edit/:id', component: EditComponent},
   {path: '', component: LoginComponent},
-  {path: '*', redirectTo: ''}
+  {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

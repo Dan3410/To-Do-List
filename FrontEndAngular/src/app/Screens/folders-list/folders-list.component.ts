@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { throwError } from 'rxjs';
 import { FoldersApiService } from '../../config/folders-api.service';
+import { LoginService } from 'src/app/config/login.service';
 import { Folder, FolderToAdd, Response } from '../../config/interfaces';
 
 
@@ -11,13 +12,16 @@ import { Folder, FolderToAdd, Response } from '../../config/interfaces';
 })
 export class FoldersListComponent implements OnInit {
 
+  constructor(private foldersApiService: FoldersApiService,
+    private loginService: LoginService ) {
+      this.loginService.isLoggedIn.subscribe(logged => this.changeLoggedIn(logged))
+  }
+
   folders: Folder[] | undefined;
   newFolder: FolderToAdd = { title: "" };
-  errorMessage: String = "";
-  loggedIn: Boolean = true;
+  errorMessage: string = "";
+  isLoggedIn: boolean = false;
 
-  constructor(private foldersApiService: FoldersApiService) {
-  }
 
   async createFolder() {
     try {
@@ -45,9 +49,15 @@ export class FoldersListComponent implements OnInit {
     console.log(this.folders)
   }
 
+  private changeLoggedIn(isLoggedIn : boolean): void{
+    this.isLoggedIn = isLoggedIn;
+  }
+
+
   ngOnInit(): void {
     try {
       this.getFolders();
+      this.loginService.getIsLoggedIn();
     } catch (error: any) {
       this.errorMessage = error
     }

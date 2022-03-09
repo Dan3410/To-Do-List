@@ -2,13 +2,14 @@
     <div class="login__title-container">
       <label class="title-format">Login</label>
     </div>
-    <form onSubmit={login}>
+    <form >
       <div class="login-form__container">
         <label>Username:</label> <br />
         <input
           class="input-format login__input "
           type="text"
-          onChange={handleChange}
+          [(ngModel)]="username"
+          name="username"
         />
       </div>
       <div class="login-form__container">
@@ -24,13 +25,15 @@
         <br />
         <input
           class="input-format login__input"
+          [(ngModel)]="password"
+          name = password
         />
       </div>
-      <button type="submit" class="button-format login__button">
+      <button class="button-format login__button" (click) = "login()">
         <label>Login</label>
       </button>
     </form>
     <div class="error-message-container">
-      <label class="error-message-label"></label>
+      <label class="error-message-label">{{errorMessage}}</label>
     </div>
   </div>

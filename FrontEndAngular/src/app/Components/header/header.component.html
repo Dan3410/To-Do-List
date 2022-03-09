@@ -8,6 +8,7 @@
     <label class="header-button__label">To-Do List</label>
   </a>
   <a
+    *ngIf="!isLoggedIn; else notLoggedIn"
     routerLink="/"
     [routerLinkActiveOptions]="{ exact: true }"
     routerLinkActive="header-button--active"
@@ -15,7 +16,13 @@
   >
     <label class="header-button__label">Login</label>
   </a>
-  <a routerLink="/logout" classList="header-button header-button--right">
-    <label class="header-button__label">Logout</label>
-  </a>
+  <ng-template #notLoggedIn>
+    <a
+      routerLink="/logout"
+      class="header-button header-button--right"
+      (click)="logOut()"
+    >
+      <label class="header-button__label">Logout</label>
+    </a>
+  </ng-template>
 </div>
