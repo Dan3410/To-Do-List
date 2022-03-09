@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     try {
-      this.loginService.logIn(this.username, this.password)
+      this.loginService.logIn(this.username.trim(), this.password)
       this.router.navigate(['/toDos'])
     } catch (error: any) {
       console.log(error)

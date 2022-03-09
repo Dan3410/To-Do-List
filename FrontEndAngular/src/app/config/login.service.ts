@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { correctPassword, passwordNotEmpty, usernameExists, userNotEmpty } from '../Utils/CheckLoginForm';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,12 @@ export class LoginService {
   }
 
   logIn(username: string, password: string) {
-    if (username === "user" && password === "password") {
+    userNotEmpty(username);
+    passwordNotEmpty(password);
+    usernameExists(username);
+    correctPassword(password);
       this.isLoggedIn.emit(true);
       localStorage.setItem("isLoggedIn", String(true));
-    } else {
-      throw ("Invalid Credentials")
-
-    }
   }
 
   LogOut() {

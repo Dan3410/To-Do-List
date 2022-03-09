@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FolderService } from 'src/app/config/folder.service';
 import { ToDoApiService } from 'src/app/config/to-do-api.service';
 import { Folder, ToDos, Response, ToDoToAdd } from 'src/app/config/interfaces';
+import { toDoAlreadyExists, toDoDescriptionNotEmpty, toDoTitleNotEmpty } from 'src/app/Utils/CheckToDos';
 
 @Component({
   selector: 'app-to-dos-list',
@@ -32,6 +33,9 @@ export class ToDosListComponent implements OnInit {
     try {
       this.newToDo.title = this.newToDo.title.trim()
       this.newToDo.description = this.newToDo.description.trim()
+      toDoTitleNotEmpty(this.newToDo.title)
+      toDoDescriptionNotEmpty(this.newToDo.title)
+      toDoAlreadyExists(this.newToDo.title,this.toDos)
       let response: Response = await this.toDosApiService.createToDo(this.newToDo)
       if (response.status === "Error") throw response.message
       this.toDos?.push(response.data)
