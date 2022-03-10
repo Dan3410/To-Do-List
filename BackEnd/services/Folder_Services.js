@@ -7,13 +7,14 @@ module.exports = {
     });
   },
   deleteFolderService: async function (id) {
-    await Folder_Model.destroy({
+    Folder_Model.destroy({
       where: {
-          id: id,
+        id: id,
       },
     });
   },
-  getAllFoldersService: async function (){
-    return await Folder_Model.findAll();
-},
+
+  getAllFoldersService: async function () {
+    return await Folder_Model.findAll();    
+  },
 };

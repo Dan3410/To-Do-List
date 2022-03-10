@@ -4,11 +4,11 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-var toDoRouter = require("./routes/toDo");
-var folderRouter = require("./routes/folder")
+const toDoRouter = require("./routes/toDo");
+const folderRouter = require("./routes/folder");
 const sequelize = require("./utils/databases/sequelize");
 
-var app = express();
+const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, console.log(`Server started on port ${PORT}`));

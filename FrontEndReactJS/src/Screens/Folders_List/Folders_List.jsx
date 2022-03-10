@@ -16,17 +16,21 @@ function Folder_List(props) {
 
   const addNewFolderToDatabase = async () => {
     addFolder(newFolder).then((response) => {
-      setFolderList([...folderList, response.data]);
+      if (response.status !== "Error")
+        setFolderList([...folderList, response.data]);
+      else setErrorMessage(response.message);
     });
   };
 
-  const deleteFolderFromDatabase = async (id) => {
+  const deleteFolderFromDatabase = (id) => {
     deleteFolder(id).then((response) => {
-      setFolderList(folderList.filter((folder) => folder.id !== id));
+      if (response.status !== "Error")
+        setFolderList(folderList.filter((folder) => folder.id !== id));
+      else setErrorMessage(response.message);
     });
   };
 
-  const getFoldersFromDatabase = async () => {
+  const getFoldersFromDatabase = () => {
     try {
       getAllFolders().then((response) => {
         setFolderList(response.data);
