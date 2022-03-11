@@ -20,28 +20,26 @@ function ToDos_List(props) {
       : {}
   );
 
-  const deleteToDoFromDatabase = async (id) => {
-    deleteToDo(id).then((response) => {
-      setToDoList(toDoList.filter((toDo) => toDo.id !== id));
-    });
+  const deleteToDoFromDatabase = (id) => {
+    deleteToDo(id).then(
+      () => setToDoList(toDoList.filter((toDo) => toDo.id !== id)),
+      () => setErrorMessage("Error deleting the ToDo")
+    );
   };
 
-  const addNewToDoToDatabase = async () => {
-    addToDo(newToDo).then((response) => {
-      setToDoList([...toDoList, response.data]);
-    });
+  const addNewToDoToDatabase = () => {
+    addToDo(newToDo).then(
+      (response) => setToDoList([...toDoList, response.data]),
+      () => setErrorMessage("Error creating the To-Do")
+    );
   };
 
   const getToDosFromDatabase = useCallback(async () => {
-    try {
-      if (location.state !== null)
-        await getAllToDosFromFolder(location.state.folder.id).then(
-          (response) => {
-            setToDoList(response.data);
-          }
-        );
-    } catch (e) {
-      console.log("Error: ", e);
+    if (location.state !== null) {
+      await getAllToDosFromFolder(location.state.folder.id).then(
+        (response) => setToDoList(response.data),
+        () => setErrorMessage("Error retrieving the folders")
+      );
     }
   }, [location.state]);
 
@@ -109,7 +107,8 @@ function ToDos_List(props) {
                 toDo={toDo}
                 key={toDo.id}
                 deleteToDo={deleteToDoFromDatabase}
-                folderId= {location.state.folder.id}
+                folderId={location.state.folder.id}
+                setErrorMessage={setErrorMessage}
               ></ToDoItem>
             );
           })}

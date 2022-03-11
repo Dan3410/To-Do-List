@@ -14,30 +14,26 @@ function Folder_List(props) {
     title: "",
   });
 
-  const addNewFolderToDatabase = async () => {
-    addFolder(newFolder).then((response) => {
-      if (response.status !== "Error")
-        setFolderList([...folderList, response.data]);
-      else setErrorMessage(response.message);
-    });
+  const addNewFolderToDatabase = () => {
+    addFolder(newFolder).then((response) => 
+      setFolderList([...folderList, response.data]),
+      (response) => setErrorMessage(response.message)
+    );
   };
 
   const deleteFolderFromDatabase = (id) => {
-    deleteFolder(id).then((response) => {
-      if (response.status !== "Error")
-        setFolderList(folderList.filter((folder) => folder.id !== id));
-      else setErrorMessage(response.message);
-    });
+    deleteFolder(id).then(
+      () =>
+        setFolderList(folderList.filter((folder) => folder.id !== id)),
+      (response) => setErrorMessage(response.message)
+    );
   };
 
   const getFoldersFromDatabase = () => {
-    try {
-      getAllFolders().then((response) => {
-        setFolderList(response.data);
-      });
-    } catch (e) {
-      console.log("Error: ", e);
-    }
+    getAllFolders().then(
+      (response) => setFolderList(response.data),
+      (response) => setErrorMessage(response.message)
+    );
   };
 
   const addNewFolderItem = (e) => {
@@ -90,6 +86,7 @@ function Folder_List(props) {
                   folder={folder}
                   key={folder.id}
                   deleteFolder={deleteFolderFromDatabase}
+                  setErrorMessage = {setErrorMessage}
                 ></FolderItem>
               );
             })}

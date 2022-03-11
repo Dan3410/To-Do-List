@@ -8,7 +8,7 @@ export async function getAllToDosFromFolder(folderId){
 
 export async function updateToDoMark(id, marked){
     const response = await axios.put(
-        baseURL + id,
+        baseURL + "mark/" + id,
         {
             marked: marked,
         }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./ToDoItem.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import { updateToDoInfo } from "../../Api/ToDoApi";
+import { updateToDoMark } from "../../Api/ToDoApi";
 
 function ToDoItem(props) {
   const [isDeleted, setDeleted] = useState(false);
@@ -12,17 +12,17 @@ function ToDoItem(props) {
   const handleMarkChange = (e) => {
     const target = e.target;
     const checked = target.checked;
-    updateToDoInfo(toDo.id, toDo.title, toDo.description, checked);
-    setTodo({ ...toDo, marked: checked });
+    updateToDoMark(toDo.id, checked).then(
+      () => setTodo({ ...toDo, marked: checked }),
+      () => props.setErrorMessage("Error updating the mark")
+    );
   };
 
-  const deleteItem = async () => {
-    try {
-      await props.deleteToDo(toDo.id);
-      setDeleted(true);
-    } catch (error) {
-      console.log(error.message);
-    }
+  const deleteItem = () => {
+      props.deleteToDo(toDo.id).then(
+        () => setDeleted(true),
+        () => props.setErrorMessage("Error deleting the ToDo")
+      );
   };
 
   if (toDo !== undefined && !isDeleted)

@@ -7,9 +7,10 @@ const {
 const { toDoAlreadyExists } = require("../utils/databases/CheckDatabase");
 
 module.exports = {
-  getAllToDosFromFolder: async function (req) {
+  getAllToDosFromFolder: async function (req, res, next) {
     return findAllToDosFromFolderService(req.params.folderId);
   },
+
   addToDo: async function (req, res, next) {
     return await createToDoService(
       req.body.title,
@@ -17,9 +18,11 @@ module.exports = {
       req.body.FolderId
     );
   },
+
   deleteToDo: async function (req, res, next) {
     await deleteToDoService(req.params.id);
   },
+
   updateToDo: async function (req, res, next) {
     const toDoList = await findAllToDosFromFolderService(req.body.folderId);
     toDoAlreadyExists(req.body.title, req.params.id, toDoList);
@@ -27,7 +30,19 @@ module.exports = {
       req.params.id,
       req.body.title,
       req.body.description,
-      req.body.marked
+      req.body.marked,
+      req.body.folderId
     );
   },
+
+  updateToDoMark: async function (req, res, next) {
+    return await updateToDoService(
+      req.params.id,
+      req.body.title,
+      req.body.description,
+      req.body.marked,
+      req.body.folderId
+    );
+  },
+
 };

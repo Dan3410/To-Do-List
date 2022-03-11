@@ -8,13 +8,11 @@ function FolderItem(props) {
   const [isDeleted, setDeleted] = useState(false);
   const folder = props.folder;
 
-  const deleteFolderItem = async () => {
-    try {
-      props.deleteFolder(folder.id);
-      setDeleted(true);
-    } catch (error) {
-      console.log(error);
-    }
+  const deleteFolderItem = () => {
+    props.deleteFolder(folder.id).then(
+      () => setDeleted(true),
+      () => props.setErrorMessage("Error deleting the folder")
+    );
   };
 
   if (folder !== undefined && !isDeleted)
@@ -28,8 +26,11 @@ function FolderItem(props) {
             onClick={deleteFolderItem}
             title="Delete Folder (this operation will delete all items inside the folder)"
           />
-          <Link to={`/toDos/folders/${folder.title}`} state={{ folder: folder }}>
-            <label className= "folder-view-items-label"> View Items </label>
+          <Link
+            to={`/toDos/folders/${folder.title}`}
+            state={{ folder: folder }}
+          >
+            <label className="folder-view-items-label"> View Items </label>
           </Link>
         </div>
       </div>
