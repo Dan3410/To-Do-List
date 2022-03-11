@@ -1,18 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Folder_Controller = require("../controllers/Folder_Controller");
+const { modifyRes, sendErrorServer } = require("../utils/responses/responses");
 
-function modifyRes(res, status, message, data) {
-  res.json({
-    status: status,
-    message: message,
-    data: data,
-  });
-}
-
-function sendErrorServer(res) {
-  res.status(500).send();
-}
 
 router.get("/", (req, res) => {
   try {

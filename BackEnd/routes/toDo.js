@@ -1,18 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ToDo_Controller = require("../controllers/ToDo_Controller");
-
-function modifyRes(res, status, message, data) {
-  res.json({
-    status: status,
-    message: message,
-    data: data,
-  });
-}
-
-function sendErrorServer(res) {
-  res.status(500).send();
-}
+const { modifyRes, sendErrorServer } = require("../utils/responses/responses");
 
 router.get("/:folderId", (req, res) =>
   ToDo_Controller.getAllToDosFromFolder(req).then(
