@@ -28,20 +28,17 @@ function Edit(props) {
     }
   };
 
-  const updateToDo = async () => {
-    try {
-      const response = await updateToDoInfo(
-        newToDoInfo.id,
-        newToDoInfo.title,
-        newToDoInfo.description,
-        newToDoInfo.marked,
-        location.state.folderId
-      );
-      if (response.status === "Error") throw new Error(response.message);
-      navigate(-1);
-    } catch (error) {
-      setErrorMessage(error.message);
-    }
+  const updateToDo = () => {
+    updateToDoInfo(
+      newToDoInfo.id,
+      newToDoInfo.title,
+      newToDoInfo.description,
+      newToDoInfo.marked,
+      location.state.folderId
+    ).then(
+      () => navigate(-1),
+      () => setErrorMessage("Error editing the To-Do")
+    );
   };
 
   const handleToDoChange = (e) => {
