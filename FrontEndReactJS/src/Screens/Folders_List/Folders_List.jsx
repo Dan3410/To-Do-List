@@ -15,24 +15,39 @@ function Folder_List(props) {
   });
 
   const addNewFolderToDatabase = () => {
-    addFolder(newFolder).then((response) => 
-      setFolderList([...folderList, response.data]),
+    addFolder(newFolder).then(
+      (response) => {
+        console.log(response);
+        if (response.status === 201) {
+          setFolderList([...folderList, response.folder]);
+          setErrorMessage("");
+        }
+        if (response.status === 500) setErrorMessage("Error creating folder");
+      },
       (response) => setErrorMessage(response.message)
     );
   };
 
   const deleteFolderFromDatabase = (id) => {
     deleteFolder(id).then(
-      () =>
-        setFolderList(folderList.filter((folder) => folder.id !== id)),
+      (response) => {
+        if (response.status === 200) {
+          setFolderList(folderList.filter((folder) => folder.id !== id));
+        }
+        if (response.status === 500) setErrorMessage("Error deleting folder");
+      },
       (response) => setErrorMessage(response.message)
     );
   };
 
   const getFoldersFromDatabase = () => {
     getAllFolders().then(
-      (response) => setFolderList(response.data),
-      (response) => setErrorMessage(response.message)
+      (response) => {
+        if (response.status === 200) setFolderList(response.folders);
+        if (response.status === 500)
+          setErrorMessage("Error retrieving folders");
+      },
+      (error) => setErrorMessage("Error retrieving folders")
     );
   };
 
@@ -42,7 +57,6 @@ function Folder_List(props) {
       folderTitleNotEmpty(newFolder.title);
       folderAlreadyExists(newFolder.title, folderList);
       addNewFolderToDatabase();
-      setErrorMessage("");
     } catch (error) {
       setErrorMessage(error.message);
     } finally {
@@ -86,7 +100,7 @@ function Folder_List(props) {
                   folder={folder}
                   key={folder.id}
                   deleteFolder={deleteFolderFromDatabase}
-                  setErrorMessage = {setErrorMessage}
+                  setErrorMessage={setErrorMessage}
                 ></FolderItem>
               );
             })}

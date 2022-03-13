@@ -36,7 +36,10 @@ function Edit(props) {
       newToDoInfo.marked,
       location.state.folderId
     ).then(
-      () => navigate(-1),
+      (response) => {
+        if (response.status === 200) navigate(-1);
+        if (response.status === 500) setErrorMessage("Error editing the To-Do");
+      },
       () => setErrorMessage("Error editing the To-Do")
     );
   };

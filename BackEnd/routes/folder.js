@@ -3,26 +3,28 @@ const router = express.Router();
 const Folder_Controller = require("../controllers/Folder_Controller");
 const { modifyRes, sendErrorServer } = require("../utils/responses/responses");
 
-
 router.get("/", (req, res) => {
-  try {
-    Folder_Controller.getAllFolders(req).then(
-      (folders) => modifyRes(res, "Success", "ToDos retrieved", folders),
-      () => sendErrorServer(res)
-    );
-  } catch {}
+  Folder_Controller.getAllFolders(req).then(
+    (response) => {
+      modifyRes(res, response.code, "ToDos retrieved", response.folders);
+    },
+    () => sendErrorServer(res)
+  );
 });
 
 router.post("/", (req, res) => {
   Folder_Controller.createFolder(req).then(
-    (newFolder) => modifyRes(res, "Success", "FolderCreated", newFolder),
+    (response) => {
+      console.log(response);
+      modifyRes(res, response.code, "Folder created", response.folder);
+    },
     () => sendErrorServer(res)
   );
 });
 
 router.delete("/:id", (req, res) => {
   Folder_Controller.deleteFolder(req).then(
-    () => modifyRes(res, "Success", "Folder deleted", null),
+    (response) => modifyRes(res, response.code, "Folder deleted", null),
     () => sendErrorServer(res)
   );
 });

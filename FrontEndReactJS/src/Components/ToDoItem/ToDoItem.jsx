@@ -6,26 +6,26 @@ import { faPen, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { updateToDoMark } from "../../Api/ToDoApi";
 
 function ToDoItem(props) {
-  const [isDeleted, setDeleted] = useState(false);
   const [toDo, setTodo] = useState(props.toDo);
 
   const handleMarkChange = (e) => {
     const target = e.target;
     const checked = target.checked;
     updateToDoMark(toDo.id, checked).then(
-      () => setTodo({ ...toDo, marked: checked }),
+      (response) => {
+        if (response.status === 200) setTodo({ ...toDo, marked: checked });
+        if (response.status === 500)
+          props.setErrorMessage("Error updating the mark");
+      },
       () => props.setErrorMessage("Error updating the mark")
     );
   };
 
   const deleteItem = () => {
-      props.deleteToDo(toDo.id).then(
-        () => setDeleted(true),
-        () => props.setErrorMessage("Error deleting the ToDo")
-      );
+    props.deleteToDo(toDo.id);
   };
 
-  if (toDo !== undefined && !isDeleted)
+  if (toDo !== undefined)
     return (
       <div className="todo-format todo-change-color">
         <div className="todo-format--center-vertically">

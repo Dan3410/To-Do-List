@@ -1,8 +1,8 @@
 const { ToDo_Model } = require("../utils/databases/sequelize");
 
 module.exports = {
-  findAllToDosFromFolderService: function (folderId) {
-    return ToDo_Model.findAll({ where: { folderId: folderId } });
+  findAllToDosFromFolderService: async function (folderId) {
+    return await ToDo_Model.findAll({ where: { folderId: folderId } });
   },
   createToDoService: async function (title, description, FolderId) {
     return await ToDo_Model.create({

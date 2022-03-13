@@ -6,16 +6,19 @@ const {
 const { deleteToDosFromFolderService } = require("../services/ToDo_Services");
 
 module.exports = {
-  createFolder: function (req, res, next) {
-    return createFolderService(req.body.title);
+  createFolder: async function (req, res, next) {
+    const newFolder = await createFolderService(req.body.title);
+    return { code: 201, folder: newFolder };
   },
 
   deleteFolder: async function (req, res, next) {
     await deleteToDosFromFolderService(req.params.id);
     await deleteFolderService(req.params.id);
+    return { code: 200 };
   },
 
   getAllFolders: async function (req, res, next) {
-    return await getAllFoldersService(req.params.id);
+    const folders = await getAllFoldersService(req.params.id);
+    return { code: 200, folders: folders };
   },
 };

@@ -1,21 +1,16 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import "./FolderItem.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function FolderItem(props) {
-  const [isDeleted, setDeleted] = useState(false);
   const folder = props.folder;
 
   const deleteFolderItem = () => {
-    props.deleteFolder(folder.id).then(
-      () => setDeleted(true),
-      () => props.setErrorMessage("Error deleting the folder")
-    );
+    props.deleteFolder(folder.id)
   };
 
-  if (folder !== undefined && !isDeleted)
+  if (folder !== undefined)
     return (
       <div className="folder-format folder-change-color">
         <div className="folder-format--center-vertically">

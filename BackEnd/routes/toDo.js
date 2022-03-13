@@ -1,40 +1,48 @@
 const express = require("express");
 const router = express.Router();
 const ToDo_Controller = require("../controllers/ToDo_Controller");
-const { modifyRes, sendErrorServer } = require("../utils/responses/responses");
+const { modifyRes, sendClientError,sendErrorServer } = require("../utils/responses/responses");
 
 router.get("/:folderId", (req, res) =>
   ToDo_Controller.getAllToDosFromFolder(req).then(
-    (toDos) => modifyRes(res, "Success", "ToDos retrieved", toDos),
+    (response) =>
+      modifyRes(res, response.code, "ToDos retrieved", response.toDos),
     () => sendErrorServer(res)
   )
 );
 
 router.post("/", (req, res) =>
   ToDo_Controller.addToDo(req).then(
-    (newToDo) => modifyRes(res, "Success", "ToDo created!", newToDo),
+    (response) =>
+      modifyRes(res, response.code, "ToDo created!", response.newToDo),
     () => sendErrorServer(res)
   )
 );
 
 router.delete("/:id", (req, res) =>
   ToDo_Controller.deleteToDo(req).then(
-    () => modifyRes(res, "Success", "ToDo deleted", null),
+    (response) => modifyRes(res, response.code, "ToDo deleted", null),
     () => sendErrorServer(res)
   )
 );
 
 router.put("/:id", (req, res) =>
   ToDo_Controller.updateToDo(req).then(
-    () => modifyRes(res, "Success", "ToDo updated", null),
+    (response) => {
+      if (response.code === 200)
+        modifyRes(res, response.code, "ToDo updated", response.toDo);
+      else 
+        sendClientError(res,response.code)
+    },
     () => sendErrorServer(res)
   )
 );
 
 router.put("/mark/:id", (req, res) =>
   ToDo_Controller.updateToDoMark(req).then(
-    () => modifyResError(res, "Success", "ToDo updated", null),
-    (error) => sendErrorServer(res, "Error", error.message, null)
+    (response) =>
+      modifyResError(res, response.code, "ToDo updated", response.toDo),
+    () => sendErrorServer(res)
   )
 );
 

@@ -29,16 +29,24 @@ function ToDos_List(props) {
 
   const addNewToDoToDatabase = () => {
     addToDo(newToDo).then(
-      (response) => setToDoList([...toDoList, response.data]),
+      (response) => {
+        if (response.status === 201) setToDoList([...toDoList, response.toDo]);
+        if (response.status === 500)
+          setErrorMessage("Error creating the To-Do");
+      },
       () => setErrorMessage("Error creating the To-Do")
     );
   };
 
-  const getToDosFromDatabase = useCallback(async () => {
+  const getToDosFromDatabase = useCallback(() => {
     if (location.state !== null) {
-      await getAllToDosFromFolder(location.state.folder.id).then(
-        (response) => setToDoList(response.data),
-        () => setErrorMessage("Error retrieving the folders")
+      getAllToDosFromFolder(location.state.folder.id).then(
+        (response) => {
+          if (response.status === 200) setToDoList(response.toDos);
+          if (response.status === 500)
+            setErrorMessage("Error retrieving ToDos");
+        },
+        () => setErrorMessage("Error retrieving ToDos")
       );
     }
   }, [location.state]);
