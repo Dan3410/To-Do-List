@@ -8,6 +8,7 @@
     <app-folder-item
       *ngFor="let folder of folders"
       [folder]="folder"
+      (errorGenerated)="childrenErrorHandler($event)"
     ></app-folder-item>
   </div>
   <div class="folder-list__buttons">

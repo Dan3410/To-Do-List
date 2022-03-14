@@ -2,14 +2,16 @@
   <label class="title-format">To-Do List</label>
   <div class="sub-title-container">
     <a routerLink="/toDos" class="sub-title-format sub-title-format--pointer">
-      <label >
-        Folders
-      </label>
+      <label> Folders </label>
     </a>
     <label class="sub-title-format"> -> {{ folder.title }} </label>
   </div>
   <div class="todo-list__items-container">
-    <app-to-do-item *ngFor="let toDo of toDos" [toDo]="toDo" [errorMessage]="errorMessage"></app-to-do-item>
+    <app-to-do-item
+      *ngFor="let toDo of toDos"
+      [toDo]="toDo"
+      (errorGenerated)="childrenErrorHandler($event)"
+    ></app-to-do-item>
   </div>
   <div class="todo-list__buttons">
     <form class="todo-list__add">
@@ -17,20 +19,23 @@
         <input
           type="text"
           class="input-format"
-          [(ngModel)] = "newToDo.title"
+          [(ngModel)]="newToDo.title"
           name="title"
           placeholder="Insert new ToDo's Title"
         />
         <input
           type="text"
           class="input-format"
-          [(ngModel)] = "newToDo.description"
+          [(ngModel)]="newToDo.description"
           name="description"
           placeholder="Insert new ToDo's Description"
         />
       </div>
-      <button type="submit" class="button-format todo-list__add__button"
-        (click)="createToDos()">
+      <button
+        type="submit"
+        class="button-format todo-list__add__button"
+        (click)="createToDos()"
+      >
         <label>Add</label>
       </button>
     </form>

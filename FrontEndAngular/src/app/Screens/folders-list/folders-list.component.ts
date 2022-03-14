@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FoldersApiService } from '../../config/folders-api.service';
 import { LoginService } from 'src/app/config/login.service';
 import { Folder, folderResponse, FolderToAdd } from '../../config/interfaces';
 import { folderTitleNotEmpty, folderAlreadyExists } from '../../Utils/CheckFolder'
+import { FolderItemComponent } from 'src/app/Components/folder-item/folder-item.component';
 
 
 
@@ -23,6 +24,9 @@ export class FoldersListComponent implements OnInit {
   errorMessage: string = "";
   isLoggedIn: boolean = false;
 
+  childrenErrorHandler(childError:string){
+    this.errorMessage = childError;
+  }
 
   createFolder() {
     try {

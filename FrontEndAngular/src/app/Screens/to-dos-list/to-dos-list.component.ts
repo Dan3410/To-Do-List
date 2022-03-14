@@ -19,10 +19,14 @@ export class ToDosListComponent implements OnInit {
   toDos: ToDos[] = [];
   newToDo: ToDoToAdd = { title: "", description: "", folderId: NaN };
 
+  childrenErrorHandler(childError: string) {
+    this.errorMessage = childError;
+  }
+
   getToDos() {
     try {
       this.toDosApiService.getToDosFromFolder(this.folder.id).then((response) => {
-        if (response.status === 200) this.toDos = response.data;
+        if (response.status === 200) { this.toDos = response.data }
         if (response.status === 500) this.errorMessage = "Error retrieving Folders"
       }, () => this.errorMessage = "Error retrieving Folders")
     } catch (error: any) {
@@ -39,7 +43,7 @@ export class ToDosListComponent implements OnInit {
       toDoAlreadyExists(this.newToDo.title, this.toDos)
       this.toDosApiService.createToDo(this.newToDo).then((response) => {
         if (response.status === 500) this.errorMessage = "Error creating ToDo"
-        if (response.status === 201) this.toDos.push(response.data)
+        if (response.status === 201) { this.toDos.push(response.data); this.errorMessage = "" }
       }, () => this.errorMessage = "Error creating ToDo")
     }
     catch (error: any) {
