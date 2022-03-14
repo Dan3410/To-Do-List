@@ -1,8 +1,13 @@
-export interface Response {
-    status: string,
-    message: string,
+export interface folderResponse {
+    status: number,
     data: any[] | any
   }
+
+export interface Response {
+  status: number,
+  data: any[] | any
+
+}
 
 export interface Folder{
   id: number,

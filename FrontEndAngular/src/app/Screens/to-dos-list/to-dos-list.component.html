@@ -9,7 +9,7 @@
     <label class="sub-title-format"> -> {{ folder.title }} </label>
   </div>
   <div class="todo-list__items-container">
-    <app-to-do-item *ngFor="let toDo of toDos" [toDo]="toDo"></app-to-do-item>
+    <app-to-do-item *ngFor="let toDo of toDos" [toDo]="toDo" [errorMessage]="errorMessage"></app-to-do-item>
   </div>
   <div class="todo-list__buttons">
     <form class="todo-list__add">

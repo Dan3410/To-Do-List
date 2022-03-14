@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { observable, Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { Response, ToDoToAdd } from './interfaces';
+import { ToDoToAdd } from './interfaces';
 
 const baseURL = "http://localhost:8080/toDo/"
 
@@ -13,28 +13,46 @@ export class ToDoApiService {
   toDoResponse: Response | undefined;
 
   constructor(private http: HttpClient) { }
-  getToDosFromFolder(folderId: Number) {
-    return this.http.get<Response>(baseURL + folderId).toPromise();
+  async getToDosFromFolder(folderId: Number) {
+    const response: any = await this.http.get<Response>(baseURL + folderId, { observe: 'response' }).toPromise()
+    return { status: response.status, data: response.body.data }
+
   }
 
-  createToDo(newToDo: ToDoToAdd) {
-    return this.http.post<Response>(baseURL,
-      {title: newToDo.title,
-      description: newToDo.description,
-      FolderId: newToDo.folderId}).toPromise();
+  async createToDo(newToDo: ToDoToAdd) {
+    const response: any = await this.http.post<Response>(baseURL,
+      {
+        title: newToDo.title,
+        description: newToDo.description,
+        FolderId: newToDo.folderId
+      }, { observe: 'response' }).toPromise();
+    return { status: response.status, data: response.body.data }
   }
 
-  deleteToDo(toDoId: Number) {
-    return this.http.delete<Response>(baseURL + toDoId).toPromise()
+  async deleteToDo(toDoId: Number) {
+    const response: any = await this.http.delete<Response>(baseURL + toDoId, { observe: 'response' }).toPromise()
+    return { status: response.status, data: response.body.data }
   }
 
-  updateToDo(toDoId: Number, toDoTitle: String, toDoDescription: String, marked: Boolean, folderId: Number) {
-    return this.http.put<Response>(baseURL + toDoId,
+  async updateToDo(toDoId: Number, toDoTitle: String, toDoDescription: String, marked: Boolean, folderId: Number) {
+    const response: any = await this.http.put<Response>(baseURL + toDoId,
       {
         title: toDoTitle.trim(),
         description: toDoDescription.trim(),
         marked: marked,
         folderId: folderId
-      }).toPromise()
+      }, { observe: 'response' }).toPromise()
+    return { status: response.status, data: response.body.data }
+  }
+
+  async updateToDoMark(toDoId: Number, toDoTitle: String, toDoDescription: String, marked: Boolean, folderId: Number) {
+    const response: any = await this.http.put<Response>(baseURL + "mark/" + toDoId,
+      {
+        title: toDoTitle.trim(),
+        description: toDoDescription.trim(),
+        marked: marked,
+        folderId: folderId
+      }, { observe: 'response' }).toPromise()
+    return { status: response.status, data: response.body.data }
   }
 }

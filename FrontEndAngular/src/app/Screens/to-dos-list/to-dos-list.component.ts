@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FolderService } from 'src/app/config/folder.service';
 import { ToDoApiService } from 'src/app/config/to-do-api.service';
-import { Folder, ToDos, Response, ToDoToAdd } from 'src/app/config/interfaces';
+import { Folder, ToDos, ToDoToAdd } from 'src/app/config/interfaces';
 import { toDoAlreadyExists, toDoDescriptionNotEmpty, toDoTitleNotEmpty } from 'src/app/Utils/CheckToDos';
 
 @Component({
@@ -12,36 +12,38 @@ import { toDoAlreadyExists, toDoDescriptionNotEmpty, toDoTitleNotEmpty } from 's
 export class ToDosListComponent implements OnInit {
 
   constructor(private folderService: FolderService,
-      private toDosApiService: ToDoApiService) { }
+    private toDosApiService: ToDoApiService) { }
 
   errorMessage: String = "";
   folder: Folder = { id: NaN, title: "", createdAt: "", updatedAt: "" };
   toDos: ToDos[] = [];
-  newToDo: ToDoToAdd = {title: "", description: "", folderId: NaN};
+  newToDo: ToDoToAdd = { title: "", description: "", folderId: NaN };
 
-  async getToDos() { 
-    let response: Response = await this.toDosApiService.getToDosFromFolder(this.folder.id)
-    if (response.status === "Error") {
-      //Revisar porque no catchea el error la funcion padre
-      console.log("Error")
-      throw ("Error retrieving Folders")
+  getToDos() {
+    try {
+      this.toDosApiService.getToDosFromFolder(this.folder.id).then((response) => {
+        if (response.status === 200) this.toDos = response.data;
+        if (response.status === 500) this.errorMessage = "Error retrieving Folders"
+      }, () => this.errorMessage = "Error retrieving Folders")
+    } catch (error: any) {
+      this.errorMessage = "Error retrieving ToDo"
     }
-    this.toDos = response.data;
   }
 
-  async createToDos(){
+  createToDos() {
     try {
       this.newToDo.title = this.newToDo.title.trim()
       this.newToDo.description = this.newToDo.description.trim()
       toDoTitleNotEmpty(this.newToDo.title)
       toDoDescriptionNotEmpty(this.newToDo.title)
-      toDoAlreadyExists(this.newToDo.title,this.toDos)
-      let response: Response = await this.toDosApiService.createToDo(this.newToDo)
-      if (response.status === "Error") throw response.message
-      this.toDos?.push(response.data)
+      toDoAlreadyExists(this.newToDo.title, this.toDos)
+      this.toDosApiService.createToDo(this.newToDo).then((response) => {
+        if (response.status === 500) this.errorMessage = "Error creating ToDo"
+        if (response.status === 201) this.toDos.push(response.data)
+      }, () => this.errorMessage = "Error creating ToDo")
     }
     catch (error: any) {
-      this.errorMessage = error
+      this.errorMessage = "Error creating ToDo"
     }
     finally {
       this.newToDo = { title: "", description: "", folderId: this.newToDo.folderId }
@@ -50,11 +52,11 @@ export class ToDosListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    try{
-    this.folder = this.folderService.getFolder();
-    this.getToDos()
-    this.newToDo.folderId = this.folder.id
-    }catch(error: any){
+    try {
+      this.folder = this.folderService.getFolder();
+      this.getToDos()
+      this.newToDo.folderId = this.folder.id
+    } catch (error: any) {
       this.errorMessage = error;
     }
   }

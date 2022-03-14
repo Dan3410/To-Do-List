@@ -41,7 +41,7 @@ router.put("/:id", (req, res) =>
 router.put("/mark/:id", (req, res) =>
   ToDo_Controller.updateToDoMark(req).then(
     (response) =>
-      modifyResError(res, response.code, "ToDo updated", response.toDo),
+      modifyRes(res, response.code, "ToDo updated", response.toDo),
     () => sendErrorServer(res)
   )
 );

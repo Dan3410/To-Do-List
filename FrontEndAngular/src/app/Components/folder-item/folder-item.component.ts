@@ -16,11 +16,12 @@ export class FolderItemComponent implements OnInit {
   notDeleted: Boolean = true
 
   constructor(private foldersApiService: FoldersApiService,
-     private folderService: FolderService) { }
+    private folderService: FolderService) { }
 
   deleteFolder() {
-    this.foldersApiService.deleteFolder(this.folder.id)
-    this.notDeleted = false;
+    this.foldersApiService.deleteFolder(this.folder.id).then((response: any) => {
+      if (response.status === 200) this.notDeleted = false;
+    })
   }
 
   setFolderInService() {

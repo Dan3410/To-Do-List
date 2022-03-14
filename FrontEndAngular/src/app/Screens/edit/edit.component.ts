@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FolderService } from 'src/app/config/folder.service';
 import { ToDos } from 'src/app/config/interfaces';
+import { Response } from 'src/app/config/interfaces';
 import { ToDoApiService } from 'src/app/config/to-do-api.service';
 import { ToDosService } from 'src/app/config/to-dos.service';
 import { Location } from '@angular/common';
@@ -16,6 +17,7 @@ export class EditComponent implements OnInit {
     id: NaN, title: "", description: "", marked: false,
     updatedAt: "", createdAt: ""
   }
+  errorMessage: String = "";
   folderId: Number = NaN;
   constructor(private toDoService: ToDosService,
     private folderService: FolderService,
@@ -32,8 +34,11 @@ export class EditComponent implements OnInit {
       this.toDo.title,
       this.toDo.description,
       this.toDo.marked,
-      this.folderId).then(() =>
-      this.returnPreviousPage()
+      this.folderId).then((response) => {
+        if (response.status === 200) this.returnPreviousPage()
+        if (response.status === 500) this.errorMessage = "Error updating ToDo"
+      },
+        () => this.errorMessage = "Error updating ToDo"
       )
   }
 

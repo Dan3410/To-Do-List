@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FoldersApiService } from '../../config/folders-api.service';
 import { LoginService } from 'src/app/config/login.service';
-import { Folder, FolderToAdd, Response } from '../../config/interfaces';
+import { Folder, folderResponse, FolderToAdd } from '../../config/interfaces';
 import { folderTitleNotEmpty, folderAlreadyExists } from '../../Utils/CheckFolder'
+
 
 
 @Component({
@@ -23,14 +24,16 @@ export class FoldersListComponent implements OnInit {
   isLoggedIn: boolean = false;
 
 
-  async createFolder() {
+  createFolder() {
     try {
       this.newFolder.title = this.newFolder.title.trim()
       folderTitleNotEmpty(this.newFolder.title);
       folderAlreadyExists(this.newFolder.title, this.folders);
-      let response: Response = await this.foldersApiService.createFolder(this.newFolder)
-      if (response.status === "Error") throw response.message
-      this.folders?.push(response.data)
+      this.foldersApiService.createFolder(this.newFolder).then((response: any) => {
+        if (response.status === 201) this.folders?.push(response.data)
+        if (response.status === 500) this.errorMessage = "Error creating folder"
+      }, () => this.errorMessage = "Error creating folder"
+      )
     }
     catch (error: any) {
       this.errorMessage = error
@@ -41,16 +44,15 @@ export class FoldersListComponent implements OnInit {
   }
 
   async getFolders() {
-    try {
-      let response: Response = await this.foldersApiService.getFolders()
-      if (response.status === "Error") {
-        throw ("Error retrieving Folders")
+    this.foldersApiService.getFolders().then((response: any) => {
+      console.log(response)
+      if (response.status === 500) {
+        this.errorMessage = "Error retrieving Folders"
       }
-      this.folders = response.data;
-    } catch (error: any) {
-      this.errorMessage = error
-    }
-
+      if (response.status === 200)
+        this.folders = response.data;
+    }, () => this.errorMessage = "Error retrieving Folders"
+    )
   }
 
   private changeLoggedIn(isLoggedIn: boolean): void {
