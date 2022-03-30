@@ -9,7 +9,8 @@ Requirements:
 	MySQL 8.0.27  
 	
 To execute the bash script, you will need to run the next command in a terminal:  
-	chmod +x ./script.sh  
+	chmod +x ./scriptReact.sh (if you want to use React as frontEnd)  
+	chmod +x ./scriptAngular.sh (if you want to use Angular as frontEnd)
 	
 You will have to provide the password of the MySQL root user.
 

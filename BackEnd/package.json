@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "start": "concurrently --kill-others \"cd .. && cd FrontEndReactJS && npm start\" \"node app.js\"",
+    "startReact": "concurrently --kill-others \"cd .. && cd FrontEndReactJS && npm start\" \"node app.js\"",
+    "startAngular": "concurrently --kill-others \"cd .. && cd FrontEndAngular && ng serve\" \"node app.js\"",
+
     "dev": "nodemon app.js"
   },
   "dependencies": {

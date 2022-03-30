@@ -15,7 +15,7 @@ echo Installing necessary packages for FrontEnd
 cd FrontEndReactJS && npm install
 cd ..
 
-cd BackEnd && npm start
+cd BackEnd && npm run startAngular
 
 
 
